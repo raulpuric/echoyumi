@@ -38,8 +38,6 @@ Server
 * https://github.com/rocktavious/django-alexa
 * https://pypi.python.org/pypi/django-alexa/0.0.3
 
-
-
 ## Reminders
 
 * Change SECRET_KEY in settings.py if using this in a production application.
