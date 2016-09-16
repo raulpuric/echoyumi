@@ -26,11 +26,15 @@ python manage.py runserver 0.0.0.0:443
 
 
 ## Helpful Links
-
+Alexa
 * https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/overviews/understanding-custom-skills
 * https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/developing-an-alexa-skill-as-a-web-service
 * https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/deploying-a-sample-skill-as-a-web-service
 * https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interface-reference
+* https://github.com/amzn/alexa-skills-kit-js
+* https://github.com/matt-kruse/alexa-app
+* https://github.com/matt-kruse/alexa-app-server
+Server
 * https://github.com/rocktavious/django-alexa
 * https://pypi.python.org/pypi/django-alexa/0.0.3
 
