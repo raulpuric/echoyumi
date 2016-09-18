@@ -10,7 +10,7 @@ sudo pip install django-alexa
 ```
 
 
-Add these to your environment variables:
+Add these to your environment variables (note: this is done in alexa.py):
 
 ```bash
 ALEXA_APP_IDS=("Your Amazon Alexa App ID",)  # comma separated list of app id's
