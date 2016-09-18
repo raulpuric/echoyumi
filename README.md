@@ -13,8 +13,8 @@ sudo pip install django-alexa
 Add these to your environment variables:
 
 ```bash
-ALEXA_APP_IDS = ("Your Amazon Alexa App ID",)  # comma separated list of app id's
-ALEXA_REQUEST_VERIFICATON = True  # Enables/Disable request verification
+ALEXA_APP_IDS=("Your Amazon Alexa App ID",)  # comma separated list of app id's
+ALEXA_REQUEST_VERIFICATON=true  # Enables/Disable request verification
 ```
 
 

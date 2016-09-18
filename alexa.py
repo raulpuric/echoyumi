@@ -1,4 +1,7 @@
-from django_alexa.api import fields, intent, Slots, ResponseBuilder
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'echoyumi.settings'
+
+from django_alexa.api import fields, intent, ResponseBuilder #, Slots
 
 @intent
 def LaunchRequest(session):
