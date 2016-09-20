@@ -1,8 +1,3 @@
-import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'echoyumi.settings'
-os.environ['ALEXA_REQUEST_VERIFICATON'] = 'True'
-os.environ['ALEXA_APP_IDS'] = 'amzn1.ask.skill.7a5f78a8-7bad-4540-a6b3-425f1f206da6'
-
 from django_alexa.api import fields, intent, ResponseBuilder #, Slots
 
 @intent
