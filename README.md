@@ -42,3 +42,4 @@ Server
 ## Reminders
 
 * Change SECRET_KEY in settings.py if using this in a production application.
+* Put all static files in the 'static' directory. Heroku will compile these static files and other Django static files into the 'staticfiles' directory, which will be overwritten everytime we push!
