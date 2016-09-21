@@ -43,6 +43,17 @@ def StopIntent(session):
     """
     return ResponseBuilder.create_response(message="Stopping actions not configured!")
 
+@intent
+def PauseIntent(session):
+    """
+    Default Pause Intent
+    ---
+    stop
+    end
+    nevermind
+    """
+    return ResponseBuilder.create_response(message="Pausing actions not configured!")
+
 
 @intent
 def HelpIntent(session):
@@ -64,3 +75,7 @@ def SessionEndedRequest(session):
     quit
     """
     return ResponseBuilder.create_response()
+
+@intent
+def GetRobotThought(session):
+    return ResponseBuilder.create_response(message="Hello World 2!")
