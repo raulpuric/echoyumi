@@ -48,9 +48,8 @@ def PauseIntent(session):
     """
     Default Pause Intent
     ---
-    stop
-    end
-    nevermind
+    pause
+    wait
     """
     return ResponseBuilder.create_response(message="Pausing actions not configured!")
 
@@ -78,4 +77,16 @@ def SessionEndedRequest(session):
 
 @intent
 def GetRobotThought(session):
+    """
+    Default GetRobotThought Intent
+    ---
+    what is my robot doing
+    tell me what my robot is doing
+    how is my robot doing
+    what is the robot doing
+    what is the yumi robot doing
+    what is yumi doing
+    what's up
+    how are you doing
+    """
     return ResponseBuilder.create_response(message="Hello World 2!")
