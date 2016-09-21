@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 from HelloWorldApp.views import helloView
+from django_alexa.views import ASKView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
