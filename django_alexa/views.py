@@ -68,6 +68,7 @@ class ASKView(APIView):
     def dispatch(self, request, *args, **kwargs):
         log.debug("#" * 10 + "Start Alexa Request" + "#" * 10)
         response = super(ASKView, self).dispatch(request, *args, **kwargs)
+        content = response.render().content
         validate_reponse_limit(response.render().content)
         log.debug("#" * 10 + "End Alexa Request" + "#" * 10)
         return response
