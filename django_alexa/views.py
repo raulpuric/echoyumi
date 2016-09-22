@@ -59,9 +59,9 @@ class ASKView(APIView):
         # reponses and the DRF request object doesn't allow you to access the
         # body after you have accessed the "data" stream
         body = request.body
-        if request.data['version']
+        if request.data['version']:
             ResponseBuilder.set_version(request.data['version'])
-        else
+        else:
             ResponseBuilder.set_version('1.0')
         validate_alexa_request(request.META, body)
         serializer = ASKInputSerializer(data=request.data)
