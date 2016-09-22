@@ -62,7 +62,7 @@ class ASKView(APIView):
         if request.data['version']:
             ResponseBuilder.set_version(request.data['version'])
         else:
-            ResponseBuilder.set_version('1.0')
+            ResponseBuilder.set_version('1.1')
         validate_alexa_request(request.META, body)
         serializer = ASKInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
