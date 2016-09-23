@@ -11,7 +11,8 @@ DEFAULT_INTENTS = [
     "CancelIntent",
     "StopIntent",
     "HelpIntent",
-    "SessionEndedRequest"
+    "SessionEndedRequest",
+    "GetRobotThought"
 ]
 
 
@@ -22,7 +23,6 @@ class IntentsSchema():
     @classmethod
     def get_intent(cls, app, intent):
         key_name = app + "." + intent
-        raise Exception("cls.intents.keys: " + str(cls.intents.keys()))
         if key_name not in cls.intents.keys():
             if intent in DEFAULT_INTENTS:
                 return cls.get_intent("base", intent)
