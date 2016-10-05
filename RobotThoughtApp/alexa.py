@@ -1,8 +1,8 @@
 from __future__ import absolute_import
 from django_alexa.api import fields, intent, ResponseBuilder
 
-from models import Log
-
+# from models import Log
+from RobotThoughtApp.models import Log
 
 @intent
 def GetRobotThought(session, key):
