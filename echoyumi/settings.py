@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_alexa',
     'rest_framework',
+    'sslserver',
     'RobotThoughtApp',
 ]
 

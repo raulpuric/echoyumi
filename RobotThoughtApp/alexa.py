@@ -22,6 +22,7 @@ def GetRobotThought(session):
     for l in Log.objects.all():
         if not l.reported:
             result += l.description + " . "
+            l.reported = True
     
     # return ResponseBuilder.create_response(message="Hello World 2!")
     return ResponseBuilder.create_response(message=result)
