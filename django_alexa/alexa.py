@@ -76,11 +76,11 @@ def SessionEndedRequest(session):
     return ResponseBuilder.create_response()
 
 @intent
-def GetRobotThought(session):
+def GetRobotThought(session, key):
     """
     Default GetRobotThought Intent
     ---
-    what is my robot doing
+    what is my robot doing {key}
     tell me what my robot is doing
     how is my robot doing
     what is the robot doing
