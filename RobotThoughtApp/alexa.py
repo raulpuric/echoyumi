@@ -5,11 +5,11 @@ from django_alexa.api import fields, intent, ResponseBuilder
 from RobotThoughtApp.models import Log
 
 @intent
-def GetRobotThought(session, key):
+def GetRobotThought(session):
     """
     Default GetRobotThought Intent
     ---
-    what is my robot doing {key}
+    what is my robot doing
     tell me what my robot is doing
     how is my robot doing
     what is the robot doing
