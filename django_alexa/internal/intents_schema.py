@@ -26,6 +26,7 @@ class IntentsSchema():
             if intent in DEFAULT_INTENTS:
                 return cls.get_intent("base", intent)
             else:
+                raise Exception(cls.intents.keys())
                 msg = "Unable to find an intent defined for '{0}'".format(key_name)
                 raise InternalError(msg)
         return cls.intents[key_name]
