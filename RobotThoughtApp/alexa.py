@@ -23,6 +23,7 @@ def GetRobotThought(session):
         if not l.reported:
             result += l.description + " . "
             l.reported = True
+            l.save()
     
     # return ResponseBuilder.create_response(message="Hello World 2!")
     return ResponseBuilder.create_response(message=result)
