@@ -74,19 +74,3 @@ def SessionEndedRequest(session):
     quit
     """
     return ResponseBuilder.create_response()
-
-@intent
-def GetRobotThought(session, key):
-    """
-    Default GetRobotThought Intent
-    ---
-    what is my robot doing {key}
-    tell me what my robot is doing
-    how is my robot doing
-    what is the robot doing
-    what is the yumi robot doing
-    what is yumi doing
-    what's up
-    how are you doing
-    """
-    return ResponseBuilder.create_response(message="Hello World 2!")

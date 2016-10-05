@@ -12,7 +12,6 @@ DEFAULT_INTENTS = [
     "StopIntent",
     "HelpIntent",
     "SessionEndedRequest",
-    "GetRobotThought"
 ]
 
 
