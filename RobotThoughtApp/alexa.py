@@ -24,6 +24,11 @@ def GetRobotThought(session):
             result += l.description + " . "
             l.reported = True
             l.save()
+
+    if result == "":
+        result = "Nothing at the moment. Please check back later."
     
     # return ResponseBuilder.create_response(message="Hello World 2!")
-    return ResponseBuilder.create_response(message=result)
+    return ResponseBuilder.create_response(message=result,
+                                            reprompt="Would you like me to continue or quit?",
+                                            end_session=False)
