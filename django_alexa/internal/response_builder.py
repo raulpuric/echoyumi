@@ -19,7 +19,8 @@ class ResponseBuilder(object):
                         message=None, message_is_ssml=False,
                         reprompt=None, reprompt_is_ssml=False, reprompt_append=True,
                         title=None, content=None, card_type=None,
-                        end_session=True, **kwargs):
+                        end_session=True, play_behavior = None, 
+                        directives = None, audio_item = None, **kwargs):
         """
         Shortcut to create the data structure for an alexa response
 
@@ -50,7 +51,8 @@ class ResponseBuilder(object):
         data['response'] = cls._create_response(message, message_is_ssml,
                                                reprompt, reprompt_is_ssml, reprompt_append,
                                                title, content, card_type,
-                                               end_session)
+                                               end_session, play_behavior,
+                                               directives, audio_item)
         data['sessionAttributes'] = kwargs
         log.debug("Response Data: {0}".format(data))
         return data
@@ -60,7 +62,8 @@ class ResponseBuilder(object):
                         message=None, message_is_ssml=False,
                         reprompt=None, reprompt_is_ssml=False, reprompt_append=True,
                         title=None, content=None, card_type=None,
-                        end_session=True):
+                        end_session=True, play_behavior = None, 
+                        directives = None, audio_item = None):
         data = {}
         data['shouldEndSession'] = end_session
         if message:
@@ -76,6 +79,10 @@ class ResponseBuilder(object):
         if reprompt:
             data['reprompt'] = cls._create_reprompt(message=reprompt,
                                                     is_ssml=reprompt_is_ssml)
+        if directives:
+            data['directives'] = cls._create_directives(directive_type = directives,
+                                                        play_behavior = play_behavior,
+                                                        audio_item = audio_item)
         return data
 
     @classmethod
@@ -101,4 +108,38 @@ class ResponseBuilder(object):
         data = {"type": card_type or "Simple"}
         if title: data["title"] = title
         if content: data["content"] = content
+        return data
+
+    @classmethod
+    def _create_directives(cls, directive_type = "AudioPlayer.Play", play_behavior = "ENQUEUE",
+        audio_item = None):
+        data = {"type": directive_type, "playBehavior": play_behavior}
+        if audio_item: data["audio_item"] = audio_item
+        return data
+
+class StreamBuilder(object):
+    """
+    Simple class to help users to build stream json for directives in alexa response data
+    """
+    version = ""
+
+    @classmethod
+    def set_version(cls, version):
+        cls.version = version
+
+    @classmethod
+    def create_stream(cls, token = None, url = None, offsetInMilliseconds = 0,
+                        **kwargs):
+        """
+        Shortcut to create the data structure for a stream in an Alexa Response's AudioItem
+
+        token - name of the stream resource
+        url - a publicly accessible url from where to stream/access your audio file
+        offsetInMilliseconds - how much to delay the initial start of streaming
+        """
+        data = {}
+        if token: data["token"] = token
+        if url: data["url"] = url
+        data["offsetInMilliseconds"] = offsetInMilliseconds
+
         return data
