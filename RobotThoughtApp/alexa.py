@@ -34,9 +34,9 @@ def GetRobotThought(session):
     # return ResponseBuilder.create_response(message="Hello World 2!")
     return ResponseBuilder.create_response(message=result,
                                             reprompt="Would you like me to continue or quit?",
-                                            end_session=False,
-                                            directives="AudioPlayer.Play",
-                                            audio_item = {"token": "explanation-audio", "url": "127.0.0.1:5005"})
+                                            end_session=False)
+                                            # directives="AudioPlayer.Play",
+                                            # audio_item = {"token": "explanation-audio", "url": "127.0.0.1:5005"})
 
 
 def StartStream():
