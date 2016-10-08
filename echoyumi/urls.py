@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from RobotThoughtApp.views import helloView
+from RobotThoughtApp.views import helloView, streamAudioView
 from django_alexa.views import ASKView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django_alexa.urls')),
     url(r'^$', helloView),
+    url(r'^audio$', streamAudioView),
 ]
