@@ -65,7 +65,7 @@ class ResponseBuilder(object):
                         end_session=True, play_behavior = None, 
                         directives = None, audio_item = None):
         data = {}
-        data['shouldEndSession'] = end_session
+        data['shouldEndSession'] = end_session or (audio_item is not None)
         if message:
             if reprompt_append and reprompt is not None:
                 message += " " + reprompt
@@ -114,7 +114,7 @@ class ResponseBuilder(object):
     def _create_directives(cls, directive_type = "AudioPlayer.Play", play_behavior = "ENQUEUE",
         audio_item = None):
         data = {"type": directive_type, "playBehavior": play_behavior}
-        if audio_item: data["audio_item"] = audio_item
+        if audio_item: data["audioItem"] = audio_item
         return data
 
 class StreamBuilder(object):
