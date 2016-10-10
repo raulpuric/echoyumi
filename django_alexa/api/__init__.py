@@ -1,1 +1,1 @@
-from django_alexa.internal import intent, ResponseBuilder, StreamBuilder  # NOQA
+from django_alexa.internal import intent, ResponseBuilder  # NOQA
