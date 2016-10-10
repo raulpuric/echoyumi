@@ -121,16 +121,6 @@ class ResponseBuilder(object):
         if audio_item: data["audioItem"] = audio_item
         return data
 
-class StreamBuilder(object):
-    """
-    Simple class to help users to build stream json for directives in alexa response data
-    """
-    version = ""
-
-    @classmethod
-    def set_version(cls, version):
-        cls.version = version
-
     @classmethod
     def create_stream(cls, token = None, url = None, offsetInMilliseconds = 0,
                         **kwargs):
