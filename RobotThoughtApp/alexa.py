@@ -21,7 +21,7 @@ def GetRobotThought(session):
     continue
     """
     return ResponseBuilder.create_response(message="Starting stream:",
-                                            # reprompt="Would you like me to continue or quit?",
+                                            reprompt="Would you like me to continue or quit?",
                                             end_session=True, # should be true for audio streams
                                             title="Play Audio Stream",
                                             content="Streaming the robot logs.",
