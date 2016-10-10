@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from django_alexa.api import fields, intent, ResponseBuilder
+from django_alexa.api import fields, intent, ResponseBuilder, StreamBuilder
 
 # from models import Log
 from RobotThoughtApp.models import Log
@@ -27,7 +27,7 @@ def GetRobotThought(session):
                                             content="Streaming the robot logs.",
                                             directives="AudioPlayer.Play",
                                             play_behavior = "ENQUEUE",
-                                            audio_item = ResponseBuilder.create_stream(
+                                            audio_item = StreamBuilder.create_stream(
                                                 token="explanation-audio",
                                                 url="https://explainable-ai.herokuapp.com/audio.mp3"
                                             )
