@@ -1,4 +1,3 @@
-import numpy
 from gtts import gTTS
 from tempfile import TemporaryFile
 from django.http import HttpResponse, StreamingHttpResponse
