@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from django_alexa.api import fields, intent, ResponseBuilder
+from django_alexa.api import fields, intent, ResponseBuilder, StreamBuilder
 
 # from models import Log
 from RobotThoughtApp.models import Log
