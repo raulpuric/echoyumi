@@ -59,6 +59,7 @@ class ResponseBuilder(object):
                                                directives, audio_item)
         data['sessionAttributes'] = kwargs
         log.debug("Response Data: {0}".format(data))
+        print("Response Data: {0}".format(data))
         return data
 
     @classmethod

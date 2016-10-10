@@ -18,7 +18,6 @@ def helloView(request):
 		result += str(l) + "<br>"
 
 	log.debug("Homepage accessed")
-	print("Homepage accessed 1")
 	
 	return HttpResponse(result)
 
