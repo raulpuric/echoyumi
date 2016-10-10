@@ -83,8 +83,8 @@ class ResponseBuilder(object):
         if reprompt:
             data['reprompt'] = cls._create_reprompt(message=reprompt,
                                                     is_ssml=reprompt_is_ssml)
-        if directives:
-            data['directives'] = cls._create_directives(directive_type = directives,
+        #if directives:
+        data['directives'] = cls._create_directives(directive_type = directives,
                                                         play_behavior = play_behavior,
                                                         audio_item = audio_item)
         return data
