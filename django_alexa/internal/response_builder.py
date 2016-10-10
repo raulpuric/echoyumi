@@ -41,6 +41,10 @@ class ResponseBuilder(object):
 
         end_session - flag to determine whether this interaction should end the session
 
+        play_behavior - REPLACE_ALL (immediately play song, replace current and enqueued streams)
+            - REPLACE_ENQUEUED (replace all enqueued streams, but keep playing current song)
+            - ENQUEUE (add to end of queue)
+
         kwargs - Anything added here will be persisted across requests if end_session is False
 
         For more comprehensive documentation see:
