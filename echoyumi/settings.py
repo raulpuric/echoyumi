@@ -165,5 +165,13 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': True,
         },
+        'echoyumi': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'RobotThoughtApp': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
     },
 }
