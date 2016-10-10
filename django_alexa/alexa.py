@@ -16,7 +16,8 @@ def LaunchRequest(session):
     begin
     """
     return ResponseBuilder.create_response(message="Welcome.",
-                                           reprompt="What would you like to do next?",
+                                           # reprompt="What would you like to do next?",
+                                           reprompt="",
                                            end_session=False)
 
 
