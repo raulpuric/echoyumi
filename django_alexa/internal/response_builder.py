@@ -146,4 +146,4 @@ class StreamBuilder(object):
         if url: data["url"] = url
         data["offsetInMilliseconds"] = offsetInMilliseconds
 
-        return data
+        return {'stream': data}

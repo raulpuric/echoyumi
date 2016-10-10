@@ -26,9 +26,9 @@ def GetRobotThought(session):
                                             title="Play Audio Stream",
                                             content="Streaming the robot logs.",
                                             directives="AudioPlayer.Play",
-                                            audio_item = {
-                                                "token": "explanation-audio",
-                                                "url": "https://explainable-ai.herokuapp.com/audio.mp3",
-                                                "offsetInMilliseconds": 0
-                                            }
+                                            play_behavior = "ENQUEUE",
+                                            audio_item = StreamBuilder.create_stream(
+                                                token="explanation-audio",
+                                                url="https://explainable-ai.herokuapp.com/audio.mp3"
+                                            )
                                         )
