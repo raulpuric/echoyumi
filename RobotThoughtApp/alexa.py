@@ -20,15 +20,17 @@ def GetRobotThought(session):
     speak
     continue
     """
-    return ResponseBuilder.create_response(message="Starting stream:",
+    return ResponseBuilder.create_response( # message="Starting stream:",
                                             # reprompt="Would you like me to continue or quit?",
+                                            message="Testing",
+                                            reprompt="",
                                             end_session=True, # should be true for audio streams
-                                            title="Play Audio Stream",
-                                            content="Streaming the robot logs.",
-                                            directives="AudioPlayer.Play",
-                                            play_behavior = "ENQUEUE",
-                                            audio_item = ResponseBuilder.create_stream(
-                                                token="explanation-audio",
-                                                url="https://explainable-ai.herokuapp.com/audio.mp3"
-                                            )
+                                            # title="Play Audio Stream",
+                                            # content="Streaming the robot logs.",
+                                            # directives="AudioPlayer.Play",
+                                            # play_behavior = "ENQUEUE",
+                                            # audio_item = ResponseBuilder.create_stream(
+                                            #     token="explanation-audio",
+                                            #     url="https://explainable-ai.herokuapp.com/audio.mp3"
+                                            # )
                                         )
