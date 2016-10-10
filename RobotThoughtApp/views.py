@@ -32,11 +32,16 @@ def logMessage(message):
 
 
 def streamAudioView(request):
+
+	print("Entered streamAudioView")
+
 	response = StreamingHttpResponse(
 		streaming_content=AudioIterator(),
 		content_type="audio/mpeg"
 	)
 	response['Content-Disposition'] = "attachment; filename=%s" % 'audio.mp3'
+
+	print("Exiting streamAudioView")
 
 	return response
 
@@ -58,7 +63,7 @@ class AudioIterator:
 				self.file_wrapper.close()
 				self.file = None
 				self.file_wrapper = None
-				if self.time > 4:
+				if self.time >= 1:
 					raise StopIteration
 				else:
 					return self.next()
