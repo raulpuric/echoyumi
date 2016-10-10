@@ -1,3 +1,4 @@
+import logging
 from gtts import gTTS
 from tempfile import TemporaryFile
 from django.http import HttpResponse, StreamingHttpResponse
@@ -6,6 +7,8 @@ from wsgiref.util import FileWrapper
 # Create your views here.
 from models import Log
 
+log = logging.getLogger(__name__)
+
 
 
 def helloView(request):
@@ -13,6 +16,8 @@ def helloView(request):
 	result = ""
 	for l in Log.objects.all():
 		result += str(l) + "<br>"
+
+	log.debug("Homepage accessed")
 	
 	return HttpResponse(result)
 
