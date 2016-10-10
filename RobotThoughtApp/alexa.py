@@ -20,9 +20,9 @@ def GetRobotThought(session):
     speak
     continue
     """
-    return ResponseBuilder.create_response(message="",
+    return ResponseBuilder.create_response(message="Starting music:",
                                             reprompt="Would you like me to continue or quit?",
                                             end_session=False,
                                             directives="AudioPlayer.Play",
-                                            audio_item = {"token": "explanation-audio", "url": "https://explainable-ai.herokuapp.com/audio"}
+                                            audio_item = {"token": "explanation-audio", "url": "https://explainable-ai.herokuapp.com/audio.mp3"}
                                         )

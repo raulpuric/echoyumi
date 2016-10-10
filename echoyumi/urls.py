@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django_alexa.urls')),
     url(r'^$', helloView),
-    url(r'^audio$', streamAudioView),
+    url(r'^audio.mp3$', streamAudioView),
 ]
