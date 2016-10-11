@@ -135,19 +135,14 @@ class ResponseBuilder(object):
         """
         data = {
             "type": "AudioPlayer.Play",
-            "playBehavior": "ENQUEUE"
+            "playBehavior": "REPLACE_ALL"
         }
         data["audioItem"] = {
             "stream" : {
-                "token": token,
+                # "token": token,
                 "url": url,
                 "offsetInMilliseconds": offsetInMilliseconds,
             }
         }
 
         return data
-
-
-
-
-
