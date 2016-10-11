@@ -79,8 +79,10 @@ class AudioIterator:
 				self.file_wrapper = None
 				return self.next()
 		else:
+			print "Checking logs"
 			logs = Log.objects.filter(reported=False)
 			if len(logs) == 0:
+				print "No logs!"
 				# message = "Nothing at the moment. Please check back later."
 				return self.get_next_music()
 			
