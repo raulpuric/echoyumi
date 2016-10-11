@@ -20,7 +20,7 @@ class ResponseBuilder(object):
                         reprompt=None, reprompt_is_ssml=False, reprompt_append=True,
                         title=None, content=None, card_type=None,
                         end_session=True, play_behavior = None, 
-                        directives = None, audio_item = None, **kwargs):
+                        directives = None, **kwargs):
         """
         Shortcut to create the data structure for an alexa response
 
@@ -56,7 +56,7 @@ class ResponseBuilder(object):
                                                reprompt, reprompt_is_ssml, reprompt_append,
                                                title, content, card_type,
                                                end_session, play_behavior,
-                                               directives, audio_item)
+                                               directives)
         data['sessionAttributes'] = kwargs
         log.debug("Response Data: {0}".format(data))
         print("Response Data: {0}".format(data))
@@ -68,9 +68,9 @@ class ResponseBuilder(object):
                         reprompt=None, reprompt_is_ssml=False, reprompt_append=True,
                         title=None, content=None, card_type=None,
                         end_session=True, play_behavior = None, 
-                        directives = None, audio_item = None):
+                        directives = None):
         data = {}
-        data['shouldEndSession'] = end_session or (audio_item is not None)
+        data['shouldEndSession'] = end_session
         if message:
             if reprompt_append and reprompt is not None:
                 message += " " + reprompt
@@ -85,9 +85,8 @@ class ResponseBuilder(object):
             data['reprompt'] = cls._create_reprompt(message=reprompt,
                                                     is_ssml=reprompt_is_ssml)
         if directives:
-            data['directives'] = cls._create_directives(directive_type = directives,
-                                                        play_behavior = play_behavior,
-                                                        audio_item = audio_item)
+            data['directives'] = directives
+
         return data
 
     @classmethod
@@ -116,10 +115,12 @@ class ResponseBuilder(object):
         return data
 
     @classmethod
-    def _create_directives(cls, directive_type = "AudioPlayer.Play", play_behavior = "ENQUEUE",
-        audio_item = None):
-        data = {"type": directive_type, "playBehavior": play_behavior}
-        if audio_item: data["audioItem"] = audio_item
+    def create_directive(cls, directive_type, play_behavior, audio_item):
+        data = {
+            "type": directive_type,
+            "playBehavior": play_behavior,
+            "audioItem": audio_item
+        }
         return data
 
     @classmethod
