@@ -20,8 +20,7 @@ def GetRobotThought(session):
     speak
     continue
     """
-    return ResponseBuilder.create_response(
-                                            message="",
+    return ResponseBuilder.create_response(message="",
                                             reprompt="",
                                             end_session=True, # should be true for audio streams
                                             title="Play Audio Stream",

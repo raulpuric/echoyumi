@@ -47,8 +47,8 @@ def streamAudioView(request):
 
 class AudioIterator:
 	def __init__(self):
-		self.CHUNK_SIZE = 1024
-		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE / 8 / 32e3 # 1024 bytes / (8 bits / byte) / (32,000 bits / sec)
+		self.CHUNK_SIZE = 32000 / 8 # 1024
+		self.SLEEP_TIME = 1.0 # 1.0 * self.CHUNK_SIZE / 8 / 32e3 # 1024 bytes / (8 bits / byte) / (32,000 bits / sec)
 
 		self.file_wrapper = None
 		file_path = os.path.join(settings.STATIC_ROOT, 'song.mp3')
@@ -61,6 +61,7 @@ class AudioIterator:
 
 	def get_next_music(self):
 		try:
+			time.sleep( self.SLEEP_TIME )
 			return self.music_file_wrapper.next()
 		except StopIteration, e:
 			self.music_file.seek(0)
@@ -69,9 +70,9 @@ class AudioIterator:
 		raise StopIteration
 
 	def next(self):
-		if self.file_wrapper:
+		if self.file_wrapper is not None:
 			try:
-				time.sleep( self.SLEEP_TIME * 1e5 ) # in seconds
+				time.sleep( self.SLEEP_TIME ) # in seconds
 				return self.file_wrapper.next()
 			except StopIteration, e:
 				self.file_wrapper.close()
