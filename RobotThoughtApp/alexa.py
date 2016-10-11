@@ -20,22 +20,13 @@ def GetRobotThought(session):
     speak
     continue
     """
-    return ResponseBuilder.create_response( # message="Starting stream:",
-                                            # reprompt="Would you like me to continue or quit?",
-                                            message="",
-                                            reprompt="",
-                                            end_session=True, # should be true for audio streams
+    return ResponseBuilder.create_response(end_session=True, # should be true for audio streams
                                             title="Play Audio Stream",
                                             content="Streaming the robot logs.",
                                             directives=[
-                                                ResponseBuilder.create_directive(
-                                                    directive_type="AudioPlayer.Play",
-                                                    play_behavior="ENQUEUE",
-                                                    audio_item=ResponseBuilder.create_stream(
-                                                        token="explanation-audio",
-                                                        url="https://explainable-ai.herokuapp.com/audio.mp3",
-                                                        offsetInMilliseconds=0
-                                                    )
+                                                ResponseBuilder.create_stream_directive(
+                                                    token="explanation-audio",
+                                                    url="https://explainable-ai.herokuapp.com/audio.mp3"
                                                 )
                                             ]
                                         )

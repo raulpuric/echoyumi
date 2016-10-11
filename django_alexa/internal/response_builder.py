@@ -124,7 +124,7 @@ class ResponseBuilder(object):
         return data
 
     @classmethod
-    def create_stream(cls, token = None, url = None, offsetInMilliseconds = 0,
+    def create_stream_directive(cls, token, url, offsetInMilliseconds=0,
                         **kwargs):
         """
         Shortcut to create the data structure for a stream in an Alexa Response's AudioItem
@@ -133,9 +133,21 @@ class ResponseBuilder(object):
         url - a publicly accessible url from where to stream/access your audio file
         offsetInMilliseconds - how much to delay the initial start of streaming
         """
-        data = {}
-        if token: data["token"] = token
-        if url: data["url"] = url
-        data["offsetInMilliseconds"] = offsetInMilliseconds
+        data = {
+            "type": "AudioPlayer.Play",
+            "playBehavior": "ENQUEUE"
+        }
+        data["audioItem"] = {
+            "stream" : {
+                "token": token,
+                "url": url,
+                "offsetInMilliseconds": offsetInMilliseconds,
+            }
+        }
 
-        return {'stream': data}
+        return data
+
+
+
+
+
