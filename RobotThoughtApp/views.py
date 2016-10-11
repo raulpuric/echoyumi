@@ -63,7 +63,7 @@ class AudioIterator:
 				self.file_wrapper.close()
 				self.file = None
 				self.file_wrapper = None
-				if self.time >= 1:
+				if self.time >= 4:
 					raise StopIteration
 				else:
 					return self.next()
