@@ -1,7 +1,8 @@
-import logging
+import logging, time
 from gtts import gTTS
 from tempfile import TemporaryFile
 from django.http import HttpResponse, StreamingHttpResponse
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from wsgiref.util import FileWrapper
 
 # Create your views here.
@@ -12,7 +13,7 @@ log = logging.getLogger(__name__)
 
 
 def helloView(request):
-	# logMessage("Message")
+	logMessage("Message")
 	result = ""
 	for l in Log.objects.all():
 		result += str(l) + "<br>"
@@ -33,56 +34,61 @@ def logMessage(message):
 
 def streamAudioView(request):
 
-	print("Entered streamAudioView")
-
 	response = StreamingHttpResponse(
 		streaming_content=AudioIterator(),
 		content_type="audio/mpeg"
 	)
 	response['Content-Disposition'] = "attachment; filename=%s" % 'audio.mp3'
 
-	print("Exiting streamAudioView")
-
 	return response
+
 
 class AudioIterator:
 	def __init__(self):
-		self.time = 0
+		self.CHUNK_SIZE = 1024
+		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE / 8 / 32e3 # 1024 bytes / (8 bits / byte) / (32,000 bits / sec)
+
 		self.file_wrapper = None
+		self.music_file = open(static('song.mp3'), 'r')
+		self.music_file_wrapper = FileWrapper(self.music_file, self.CHUNK_SIZE)
 		return
 
 	def __iter__(self):
 		return self
 
+	def get_next_music(self):
+		try:
+			return self.music_file_wrapper.next()
+		except StopIteration, e:
+			self.music_file.seek(0)
+			return self.get_next_music()
+		# else, raise an error to stop the entire stream
+		raise StopIteration
+
 	def next(self):
 		if self.file_wrapper:
 			try:
-				# add a sleep delay here?
+				time.sleep( self.SLEEP_TIME ) # in seconds
 				return self.file_wrapper.next()
 			except StopIteration, e:
 				self.file_wrapper.close()
 				self.file = None
 				self.file_wrapper = None
-				if self.time >= 4:
-					raise StopIteration
-				else:
-					return self.next()
+				return self.next()
 		else:
-			# message = 'Hello world '+str(self.time)+'!'
 			logs = Log.objects.filter(reported=False)
 			if len(logs) == 0:
-				message = "Nothing at the moment. Please check back later."
-				# eventually, replace this mesage with music
-			else:
-				# replace .first() with scheduling scheme?
-				log = logs.first()
-				log.reported = True
-				log.save()
-				message = log.description
+				# message = "Nothing at the moment. Please check back later."
+				return self.get_next_music()
+			
+			log = logs.latest('id')
+			message = log.description
+			logs.update(reported=True)
+
 			tts = gTTS(text=message, lang='en')
 			self.file = TemporaryFile()
 			tts.write_to_fp(self.file)
 			self.file.seek(0)
 			self.time += 1
-			self.file_wrapper = FileWrapper(self.file, 1024)
+			self.file_wrapper = FileWrapper(self.file, self.CHUNK_SIZE)
 			return self.next()
