@@ -71,7 +71,7 @@ class AudioIterator:
 	def next(self):
 		if self.file_wrapper:
 			try:
-				time.sleep( self.SLEEP_TIME * 1e5 ) # in seconds
+				time.sleep( self.SLEEP_TIME * 1e3 ) # in seconds
 				return self.file_wrapper.next()
 			except StopIteration, e:
 				self.file_wrapper.close()
@@ -92,6 +92,5 @@ class AudioIterator:
 			self.file = TemporaryFile()
 			tts.write_to_fp(self.file)
 			self.file.seek(0)
-			self.time += 1
 			self.file_wrapper = FileWrapper(self.file, self.CHUNK_SIZE)
 			return self.next()
