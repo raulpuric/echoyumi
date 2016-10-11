@@ -47,8 +47,8 @@ def streamAudioView(request):
 
 class AudioIterator:
 	def __init__(self):
-		self.CHUNK_SIZE = 1024
-		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE / 8 / 32e3 # 1024 bytes / (8 bits / byte) / (32,000 bits / sec)
+		self.CHUNK_SIZE = 1024 * 8
+		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE * 8 / 32e3 # 1024 bytes * (8 bits / byte) / (32,000 bits / sec)
 
 		self.file_wrapper = None
 		file_path = os.path.join(settings.STATIC_ROOT, 'song.mp3')
