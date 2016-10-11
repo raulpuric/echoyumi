@@ -1,9 +1,11 @@
-import logging, time
+import logging, os, time
 from gtts import gTTS
-from tempfile import TemporaryFile
+from django.conf import settings
 from django.http import HttpResponse, StreamingHttpResponse
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from tempfile import TemporaryFile
 from wsgiref.util import FileWrapper
+
 
 # Create your views here.
 from models import Log
@@ -49,7 +51,8 @@ class AudioIterator:
 		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE / 8 / 32e3 # 1024 bytes / (8 bits / byte) / (32,000 bits / sec)
 
 		self.file_wrapper = None
-		self.music_file = open(static('song.mp3'), 'r')
+		file_path = os.path.join(settings.STATIC_ROOT, 'song.mp3')
+		self.music_file = open(file_path, 'r')
 		self.music_file_wrapper = FileWrapper(self.music_file, self.CHUNK_SIZE)
 		return
 
