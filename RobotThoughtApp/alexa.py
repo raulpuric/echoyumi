@@ -25,7 +25,6 @@ def GetRobotThought(session):
                                             content="Streaming the robot logs.",
                                             directives=[
                                                 ResponseBuilder.create_stream_directive(
-                                                    # token="explanation-audio",
                                                     url="https://explainable-ai.herokuapp.com/audio.mp3"
                                                 )
                                             ]
