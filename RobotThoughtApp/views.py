@@ -71,7 +71,7 @@ class AudioIterator:
 	def next(self):
 		if self.file_wrapper:
 			try:
-				time.sleep( self.SLEEP_TIME * 1e3 ) # in seconds
+				time.sleep( self.SLEEP_TIME * 1e5 ) # in seconds
 				return self.file_wrapper.next()
 			except StopIteration, e:
 				self.file_wrapper.close()
