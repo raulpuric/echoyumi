@@ -13,14 +13,24 @@ from models import Log
 log = logging.getLogger(__name__)
 
 
+messages = [
+	'I am initializing the robot',
+	'I am loading the objects',
+	'I am opening the camera',
+	'I am loading the grasps',
+	'I am loading the object classifiers for registration'
+]
+
+i = 0
 
 def helloView(request):
-	logMessage("Message")
+	global i
+	logMessage(messages[i])
+	i += 1
+	
 	result = ""
 	for l in Log.objects.all():
 		result += str(l) + "<br>"
-
-	log.debug("Homepage accessed")
 	
 	return HttpResponse(result)
 
