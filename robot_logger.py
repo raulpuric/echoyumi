@@ -15,8 +15,9 @@ def log(message):
 
 	return
 
-log('I am initializing the robot')
-log('I am loading the objects')
-log('I am opening the camera')
-log('I am loading the grasps')
-log('I am loading the object classifiers for registration')
+# log('I am initializing the robot')
+# log('I am loading the objects')
+# log('I am opening the camera')
+# log('I am loading the grasps')
+# log('I am loading the object classifiers for registration')
+log('message')
