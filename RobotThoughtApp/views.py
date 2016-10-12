@@ -27,6 +27,7 @@ def helloView(request):
 	global i
 	logMessage(messages[i])
 	i += 1
+	i %= len(messages)
 	
 	result = ""
 	for l in Log.objects.all():
