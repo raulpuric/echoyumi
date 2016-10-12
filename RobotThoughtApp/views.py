@@ -48,17 +48,17 @@ def streamAudioView(request):
 class AudioIterator:
 	def __init__(self):
 		self.CHUNK_SIZE = 1056 # 1024
-		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE * 8 / 24e3 # 1024 bytes * (8 bits / byte) / (32,000 bits / sec)
+		self.SLEEP_TIME = 1.0 * self.CHUNK_SIZE * 8 / 32e3 # 1024 bytes * (8 bits / byte) / (32,000 bits / sec)
 
 		self.file_wrapper = None
 		
-		# file_path = os.path.join(settings.STATIC_ROOT, 'song.mp3')
-		# self.music_file = open(file_path, 'r')
+		file_path = os.path.join(settings.STATIC_ROOT, 'song.mp3')
+		self.music_file = open(file_path, 'r')
 
-		tts = gTTS(text="This is some background music.", lang='en')
-		self.music_file = TemporaryFile()
-		tts.write_to_fp(self.music_file)
-		self.music_file.seek(0)
+		# tts = gTTS(text="This is some background music.", lang='en')
+		# self.music_file = TemporaryFile()
+		# tts.write_to_fp(self.music_file)
+		# self.music_file.seek(0)
 		
 		self.music_file_wrapper = FileWrapper(self.music_file, self.CHUNK_SIZE)
 		return
