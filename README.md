@@ -73,13 +73,3 @@ Server
 
 * Change SECRET_KEY in settings.py if using this in a production application.
 * Put all static files in the 'static' directory. Heroku will compile these static files and other Django static files into the 'staticfiles' directory, which will be overwritten everytime we push!
-
-
-
-
-
-ALEXA_APP_ID_='amzn1.ask.skill.7a5f78a8-7bad-4540-a6b3-425f1f206da6'
-ALEXA_APP_ID_YUMI='amzn1.ask.skill.7a5f78a8-7bad-4540-a6b3-425f1f206da6'
-ALEXA_APP_IDS='amzn1.ask.skill.7a5f78a8-7bad-4540-a6b3-425f1f206da6'
-ALEXA_REQUEST_VERIFICATON=True
-DJANGO_SETTINGS_MODULE='echoyumi.settings'
