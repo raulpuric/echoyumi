@@ -29,7 +29,7 @@ def GetRobotThought(session):
                                                 ResponseBuilder.create_stream_directive(
                                                     playBehavior="REPLACE_ALL",
                                                     token="explainable-audio",
-                                                    url="https://explainable-ai.herokuapp.com/audio.mp3"
+                                                    url="https://134e60a0.ngrok.io/audio.mp3"
                                                 )
                                             ]
                                         )
