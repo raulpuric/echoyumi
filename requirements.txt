@@ -2,7 +2,6 @@ cffi==1.8.3
 cryptography==1.5
 Django==1.10.2
 django-alexa==0.0.6
-django-sslserver==0.19
 djangorestframework==3.4.7
 enum34==1.1.6
 gTTS==1.1.6

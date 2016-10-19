@@ -21,8 +21,21 @@ ALEXA_REQUEST_VERIFICATON=true  # Enables/Disable request verification
 To run the Django server:
 
 ```bash
-python manage.py runserver 0.0.0.0:443
+python manage.py runserver
 ```
+
+
+After running that locally, you can access the server externally by running (in 2 different terminals):
+```bash
+python manage.py runserver
+./ngrok-linux-64 http 8000
+```
+
+The external url will be in the form of https://*.ngrok.io. If you want to have the external url be constant throughout restarts, upgrade to the paid ngrok plan, and replace the last command with:
+```bash
+./ngrok-linux-64 http -subdomain=inconshreveable 8000
+```
+
 
 Our server is hosted on heroku:
 ```
