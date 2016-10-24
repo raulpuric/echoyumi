@@ -60,8 +60,7 @@ class AudioThread(threading.Thread):
         self._stop_event = threading.Event()
         
         self.CHUNK = 1024
-        # file_path = os.path.join(settings.STATIC_ROOT, 'song.wav')
-        file_path = 'static/song.wav'
+        file_path = os.path.join(settings.STATIC_ROOT, 'song.wav')
         self.wf = wave.open(file_path, 'rb')
         self.p = pyaudio.PyAudio()
         self.stream = self.p.open(
