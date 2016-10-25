@@ -4,9 +4,8 @@
 To use this project, clone this repo and run the following:
 
 ```bash
-sudo pip install requests
-sudo pip install Django==1.10.1
-sudo pip install django-alexa
+sudo pip install -r requirements.txt
+sudo apt-get install gnustep-gui-runtime  # For the "say" command on linux
 ```
 
 
@@ -37,7 +36,7 @@ The external url will be in the form of https://*.ngrok.io. If you want to have 
 ```
 
 
-Our server is hosted on heroku:
+Our server was temporarily hosted on heroku:
 ```
 https://explainable-ai.herokuapp.com
 ```

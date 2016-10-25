@@ -6,6 +6,7 @@ import threading
 import pyaudio
 import wave
 import os
+from subprocess import call
 
 from RobotThoughtApp.models import Log
 
@@ -59,7 +60,7 @@ class AudioThread(threading.Thread):
     def __init__(self):
         super(AudioThread, self).__init__()
         self._stop_event = threading.Event()
-        
+
         self.CHUNK = 1024
         file_path = os.path.join(settings.STATIC_ROOT, 'song.wav')
         self.wf = wave.open(file_path, 'rb')
@@ -71,7 +72,7 @@ class AudioThread(threading.Thread):
             output = True
         )
         self.engine = tts.init()
-        self.engine.setProperty('rate', 150)
+        self.engine.setProperty('rate', 175)
         self.engine.setProperty('voice', 'english-us')
         self.engine.startLoop(False)
         return
@@ -93,6 +94,7 @@ class AudioThread(threading.Thread):
                 log = logs.latest('id')
                 message = log.description
                 logs.update(reported=True)
+                # call(["say", "-r", "200", "-v", "Fred", str(message)])
                 self.engine.say(message)
                 # _ = self.engine.runAndWait()
                 self.engine.iterate()
