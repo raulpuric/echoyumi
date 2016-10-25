@@ -5,6 +5,7 @@ import pyttsx as tts
 import threading
 import pyaudio
 import wave
+import os
 
 from RobotThoughtApp.models import Log
 
