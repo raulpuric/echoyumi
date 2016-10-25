@@ -73,6 +73,7 @@ class AudioThread(threading.Thread):
         self.engine = tts.init()
         self.engine.setProperty('rate', 150)
         self.engine.setProperty('voice', 'english-us')
+        self.engine.startLoop(False)
         return
 
     def stop(self):
@@ -93,7 +94,10 @@ class AudioThread(threading.Thread):
                 message = log.description
                 logs.update(reported=True)
                 self.engine.say(message)
-                _ = self.engine.runAndWait()
+                # _ = self.engine.runAndWait()
+                self.engine.iterate()
+        self.engine.endLoop()
+        self.engine.stop()
         self.stream.close()
         self.p.terminate()
         return
