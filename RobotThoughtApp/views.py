@@ -14,11 +14,27 @@ log = logging.getLogger(__name__)
 
 
 messages = [
-	'I am initializing the robot',
-	'I am loading the objects',
-	'I am opening the camera',
-	'I am loading the grasps',
-	'I am loading the object classifiers for registration'
+	"I'm initializing the Python interface to the ABB Robot arms",
+	"I'm loading 3D object models",
+	"I'm initializing the Kinect camera",
+	"I'm loading the robust grasp set computed by Dex-Net",
+	"I'm loading the object pose classifier Deep Learning network parameters",
+	"My camera image suggests there are parts in the tray with confidence 78%",
+	"I'm attempting to singulate parts with the paddle and right arm",
+	"I've detected that {name of object} is singulated with confidence 88%",
+	"I'm using the DL network to estimate the 3D stable pose of the yellow block",
+	"I've determined the green block is in pose 3 with confidence 96%",
+    "I can't reliably determine the pose of the white block",
+    "I'm pushing [name of object] and hope that will make it easier to find it's pose",
+	"I'm searching for the most robust, reachable grasp for the orange block in pose 3",
+	"I'm moving the left arm and gripper into position",
+	"I'm computing a collision free path to place the purple block into the box",
+	"I detect the grasp was successful and the yellow block is now packed into the box",
+	"I detect that this grasp failed",
+	"I'm searching for an alternate robust, reachable grasp for the black block in pose 3. I'm now moving the gripper into position",
+	"I don't detect any objects in the tray",
+	"I detect that the left robot arm has accidentally collided with an object and must be reset",
+	"I detect that the right robot arm has reached a joint limit/singularity and must be reset"
 ]
 
 i = 0
