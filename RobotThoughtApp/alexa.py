@@ -89,6 +89,9 @@ class AudioThread(threading.Thread):
             logs = Log.objects.filter(reported=False)
             if len(logs) == 0:
                 data = self.wf.readframes(self.CHUNK)
+                if len(data) == 0:
+                    self.wf.rewind()
+                    data = self.wf.readframes(self.CHUNK)
                 self.stream.write(data)
             else:
                 log = logs.latest('id')
