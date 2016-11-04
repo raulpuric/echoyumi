@@ -17,14 +17,7 @@ ALEXA_REQUEST_VERIFICATON=true  # Enables/Disable request verification
 ```
 
 
-To run the Django server:
-
-```bash
-python manage.py runserver
-```
-
-
-After running that locally, you can access the server externally by running (in 2 different terminals):
+To run the Django server locally and access the server externally, source from alan_rishi and run (in 2 different terminals):
 ```bash
 python manage.py runserver
 ./ngrok-linux-64 http 8000
