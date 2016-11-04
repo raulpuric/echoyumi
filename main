@@ -8,6 +8,7 @@ source activate alan_rishi
 trap ctrl_c INT
 
 function ctrl_c() {
+	kill $!
 	source deactivate
 	exit $?
 }

@@ -17,7 +17,7 @@ ALEXA_REQUEST_VERIFICATON=true  # Enables/Disable request verification
 ```
 
 
-To run the Django server locally and access the server externally, run the main script from any directory:
+To run the Django server locally and access the server externally, run the main script:
 ```bash
 ./main
 ```
