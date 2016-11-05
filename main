@@ -9,6 +9,7 @@ trap ctrl_c INT
 
 function ctrl_c() {
 	kill $!
+	fg
 	source deactivate
 	exit $?
 }

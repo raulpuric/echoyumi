@@ -72,7 +72,7 @@ class AudioThread(threading.Thread):
             output = True
         )
         self.engine = tts.init()
-        self.engine.setProperty('rate', 175)
+        self.engine.setProperty('rate', 150)
         self.engine.setProperty('voice', 'english-us')
         self.engine.startLoop(False)
         return
