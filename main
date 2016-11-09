@@ -7,5 +7,5 @@ source activate alan_rishi
 python manage.py runserver &
 ./ngrok-linux-64 http 8000
 
-kill $!
+kill -- -$$
 source deactivate
