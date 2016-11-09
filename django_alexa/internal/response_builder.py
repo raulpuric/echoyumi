@@ -58,8 +58,8 @@ class ResponseBuilder(object):
                                                end_session, play_behavior,
                                                directives)
         data['sessionAttributes'] = kwargs
-        log.debug("Response Data: {0}".format(data))
-        print("Response Data: {0}".format(data))
+        # log.debug("Response Data: {0}".format(data))
+        # print("Response Data: {0}".format(data))
         return data
 
     @classmethod
