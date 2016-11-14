@@ -75,25 +75,26 @@ def RunInResultsMode(session):
     global audio_thread
     if audio_thread is not None:
         stop_bluetooth_thread()
-        title = "Stopping Audio Stream"
-        content = "Stopping the Bluetooth audio stream."
+        title = "Stopping Audio Stream, entering Results Mode"
+        content = "Stopping the Bluetooth audio stream. Reporting the results so far."
     else:
         title = "Results Mode"
         content = "Reporting the results so far."
     
-    engine = tts.init()
-    engine.setProperty('rate', 150)
-    engine.setProperty('voice', 'english-us')
-    engine.startLoop(False)
+    # engine = tts.init()
+    # engine.setProperty('rate', 150)
+    # engine.setProperty('voice', 'english-us')
+    # engine.startLoop(False)
 
     message = "Testing results mode." # TODO
-    engine.say(message)
-    engine.iterate()
+    # engine.say(message)
+    # engine.iterate()
 
-    engine.endLoop()
-    engine.stop()
+    # engine.endLoop()
+    # engine.stop()
 
-    return ResponseBuilder.create_response(end_session=False,
+    return ResponseBuilder.create_response(message=message,
+                                            end_session=False,
                                             title=title,
                                             content=content
                                           )
