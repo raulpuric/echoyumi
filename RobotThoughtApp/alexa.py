@@ -87,6 +87,14 @@ def RunInResultsMode(session):
     # engine.startLoop(False)
 
     message = "Testing results mode." # TODO
+    total = Log.objects.filter(description__icontains="singulat").count()
+    success = Log.objects.filter(Q(description__icontains="singulat") & ~Q(description__icontains="fail")).count()
+    if total == 0:
+        success_rate = 0.0
+    else:
+        success_rate = 100.0 * success / total
+
+    message = "%d percent success rate on singulation."
     # engine.say(message)
     # engine.iterate()
 
