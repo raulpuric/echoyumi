@@ -142,6 +142,7 @@ class AudioThread(threading.Thread):
                 rate = self.wf.getframerate(),
                 output = True
             )
+        Log.objects.filter(reported=False).update(reported=True)
         self.engine = tts.init()
         self.engine.setProperty('rate', 150)
         self.engine.setProperty('voice', 'english-us')
