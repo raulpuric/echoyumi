@@ -269,7 +269,3 @@ def start_gtts_thread(message):
     gtts_thread.daemon = True
     gtts_thread.start()
     return
-
-import IPython
-IPython.embed()
-sys.exit(0)
