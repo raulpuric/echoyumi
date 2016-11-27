@@ -269,3 +269,5 @@ def start_gtts_thread(message):
     gtts_thread.daemon = True
     gtts_thread.start()
     return
+
+audify_database()
