@@ -187,7 +187,7 @@ class AudioThread(threading.Thread):
         return data
 
     def play_message(message):
-        file_path = os.path.join(settings.STATIC_ROOT, 'messages', message.lower().replace(" ", "_")+'.wav')
+        file_path = os.path.join(settings.STATIC_ROOT, 'messages', message.lower().replace(" ", "_").replace('/', '_')+'.wav')
         if os.path.isfile(file_path):
             wf = wave.open(file_path, 'rb')
             msg_data = wf.readframes(sys.maxint)
@@ -242,7 +242,7 @@ def stop_bluetooth_thread():
 
 def gtts_to_wav(message):
     tts = gTTS(text=message, lang='en')
-    file_name = message.lower().replace(" ", "_")
+    file_name = message.lower().replace(" ", "_").replace('/', '_')
     file_path = os.path.join(settings.STATIC_ROOT, 'messages', file_name)
     tts.save(file_path + ".mp3")
     call(["ffmpeg", "-i", file_path + ".mp3",
@@ -254,7 +254,7 @@ def gtts_to_wav(message):
     return
 
 def audify_database():
-    database = [str(a['description']).lower().replace(' ', '_') for a in Log.objects.values('description')]
+    database = [str(a['description']).lower().replace(' ', '_').replace('/', '_') for a in Log.objects.values('description')]
     database = set(database)
     saved = [a[:-4] for a in os.listdir(os.path.join(settings.STATIC_ROOT, 'messages'))]
     saved = set(saved)
