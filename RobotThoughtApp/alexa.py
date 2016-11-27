@@ -2,7 +2,7 @@ from __future__ import absolute_import, division
 from django_alexa.api import fields, intent, ResponseBuilder
 from django.conf import settings
 from gtts import gTTS
-# import pyttsx as tts
+import pyttsx as tts
 import threading
 import pyaudio
 import wave
@@ -81,26 +81,16 @@ def RunInResultsMode(session):
     else:
         title = "Results Mode"
         content = "Reporting the results so far."
-    
-    # engine = tts.init()
-    # engine.setProperty('rate', 150)
-    # engine.setProperty('voice', 'english-us')
-    # engine.startLoop(False)
 
-    message = "Testing results mode." # TODO
-    total = Log.objects.filter(description__icontains="singulat").count()
-    success = Log.objects.filter(Q(description__icontains="singulat") & ~Q(description__icontains="fail")).count()
-    if total == 0:
-        success_rate = 0.0
-    else:
-        success_rate = 100.0 * success / total
+    message = "Testing results mode."
+    # total = Log.objects.filter(description__icontains="singulat").count()
+    # success = Log.objects.filter(Q(description__icontains="singulat") & ~Q(description__icontains="fail")).count()
+    # if total == 0:
+    #     success_rate = 0.0
+    # else:
+    #     success_rate = 100.0 * success / total
 
-    message = "%d percent success rate on singulation."
-    # engine.say(message)
-    # engine.iterate()
-
-    # engine.endLoop()
-    # engine.stop()
+    # message = "%d percent success rate on singulation."
 
     return ResponseBuilder.create_response(message=message,
                                             end_session=False,
@@ -254,7 +244,6 @@ def gtts_to_wav(message):
     tts = gTTS(text=message, lang='en')
     file_name = message.lower().replace(" ", "_")
     file_path = os.path.join(settings.STATIC_ROOT, 'messages', file_name)
-    # file_path = "static/messages/"+file_name
     tts.save(file_path + ".mp3")
     call(["ffmpeg", "-i", file_path + ".mp3",
         "-acodec", "pcm_s16le",
@@ -265,7 +254,7 @@ def gtts_to_wav(message):
     return
 
 def audify_database():
-    database = [a.lower().replace(' ', '_') for a in Log.objects.values('description')]
+    database = [str(a['description']).lower().replace(' ', '_') for a in Log.objects.values('description')]
     database = set(database)
     saved = [a[:-4] for a in os.listdir(os.path.join(settings.STATIC_ROOT, 'messages'))]
     saved = set(saved)
