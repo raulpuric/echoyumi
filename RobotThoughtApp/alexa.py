@@ -1,13 +1,12 @@
 from __future__ import absolute_import, division
 from django_alexa.api import fields, intent, ResponseBuilder
 from django.conf import settings
-from gtts import gTTS
-import pyttsx as tts
-import threading
-import pyaudio
-import wave
-import os, sys
 from subprocess import call
+from gtts import gTTS
+import os, sys, time
+import pyaudio, wave
+import threading
+import pyttsx
 
 from RobotThoughtApp.models import Log
 
@@ -136,7 +135,7 @@ class AudioThread(threading.Thread):
         )
 
         Log.objects.filter(reported=False).update(reported=True)
-        self.engine = tts.init()
+        self.engine = pyttsx.init()
         self.engine.setProperty('rate', 150)
         self.engine.setProperty('voice', 'english-us')
         self.engine.startLoop(False)
@@ -149,9 +148,7 @@ class AudioThread(threading.Thread):
     def stopped(self):
         return self._stop_event.isSet()
 
-    def get_music(self, chunk_size=None):
-        if chunk_size is None:
-            chunk_size = self.CHUNK
+    def get_music(self, chunk_size):
         data = self.wf.readframes(chunk_size)
         if len(data) < chunk_size:
             self.wf.rewind()
@@ -204,8 +201,10 @@ class AudioThread(threading.Thread):
     def run(self):
         while not self.stopped():
             logs = Log.objects.filter(reported=False)
-            if len(logs) == 0 and self.play_music:
-                data = self.get_music()
+            if len(logs) == 0 and not self.play_music:
+                time.sleep(0.01)
+            elif len(logs) == 0 and self.play_music:
+                data = self.get_music(self.CHUNK)
                 self.stream.write(data)
             else:
                 log = logs.latest('id')
