@@ -210,8 +210,8 @@ class AudioThread(threading.Thread):
             else:
                 log = logs.latest('id')
                 message = log.description
-                self.play_message(message)
                 Log.objects.filter(reported=False).update(reported=True)
+                self.play_message(message)
         self.engine.endLoop()
         self.engine.stop()
         self.stream.close()
