@@ -189,7 +189,8 @@ class AudioThread(threading.Thread):
             wf = wave.open(file_path, 'rb')
             msg_data = wf.readframes(sys.maxint)
             music_data = self.get_music(len(msg_data))
-            data = self.merge_audio(msg_data, 2.0, music_data, 1.0)
+            # data = self.merge_audio(msg_data, 2.0, music_data, 1.0)
+            data = msg_data
             self.stream.write(data)
         else:
             self.engine.say(message)
