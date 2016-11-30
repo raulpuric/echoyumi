@@ -155,7 +155,7 @@ class AudioThread(threading.Thread):
             data += self.wf.readframes(chunk_size - len(data))
         return data
 
-    def merge_audio(data1, weight1, data2, weight2):
+    def merge_audio(self, data1, weight1, data2, weight2):
         # http://stackoverflow.com/questions/4039158/mixing-two-audio-files-together-with-python
         def bin_to_int(bin):
             as_int = 0
@@ -183,7 +183,7 @@ class AudioThread(threading.Thread):
 
         return data
 
-    def play_message(message):
+    def play_message(self, message):
         file_path = os.path.join(settings.STATIC_ROOT, 'messages', message.lower().replace(" ", "_").replace('/', '_')+'.wav')
         if os.path.isfile(file_path):
             wf = wave.open(file_path, 'rb')
