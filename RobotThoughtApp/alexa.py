@@ -254,9 +254,9 @@ def gtts_to_wav(message):
     return
 
 def audify_database():
-    database = [str(a['description']).lower().replace(' ', '_').replace('/', '_') for a in Log.objects.values('description')]
+    database = [str(a['description']).lower().replace('/', ' ') for a in Log.objects.values('description')]
     database = set(database)
-    saved = [a[:-4] for a in os.listdir(os.path.join(settings.STATIC_ROOT, 'messages'))]
+    saved = [a[:-4].replace('_', ' ') for a in os.listdir(os.path.join(settings.STATIC_ROOT, 'messages'))]
     saved = set(saved)
     
     messages = database - saved
