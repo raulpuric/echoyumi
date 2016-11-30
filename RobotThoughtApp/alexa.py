@@ -35,7 +35,7 @@ def GetRobotThought(session):
     close audio stream
     """
     title, content = processAudio()
-    return ResponseBuilder.create_response(end_session=False,
+    return ResponseBuilder.create_response(end_session=True,
                                             title=title,
                                             content=content
                                           )
@@ -56,7 +56,7 @@ def RunInDevMode(session):
     if audio_thread is not None:
         stop_bluetooth_thread()
     title, content = processAudio(play_music=False)
-    return ResponseBuilder.create_response(end_session=False,
+    return ResponseBuilder.create_response(end_session=True,
                                             title=title,
                                             content=content
                                           )
@@ -92,7 +92,7 @@ def RunInResultsMode(session):
     # message = "%d percent success rate on singulation."
 
     return ResponseBuilder.create_response(message=message,
-                                            end_session=False,
+                                            end_session=True,
                                             title=title,
                                             content=content
                                           )
