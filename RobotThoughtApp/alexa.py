@@ -372,7 +372,7 @@ def log_grasps(number, params):
     line = ','.join(parts).lower()
     
     # Write to file
-    f = open("grasp_command.txt", 'w')
+    f = open("/home/autolab/Workspace/rishi_working/echoyumi/grasp_command.txt", 'w')
     f.write(line)
     f.close()
 
