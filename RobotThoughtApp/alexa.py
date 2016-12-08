@@ -12,6 +12,10 @@ from RobotThoughtApp.models import Log
 
 
 
+########################
+##### Main Intents #####
+########################
+
 @intent
 def GetRobotThought(session):
     """
@@ -115,7 +119,9 @@ def processAudio(play_music=True):
 
 
 
-####### Main Audio Thread #######
+#############################
+##### Main Audio Thread #####
+#############################
 
 class AudioThread(threading.Thread):
     def __init__(self, play_music=True):
@@ -238,7 +244,10 @@ def stop_bluetooth_thread():
 
 
 
-####### gTTS Conversion Thread #######
+
+##################################
+##### gTTS Conversion Thread #####
+##################################
 
 def gtts_to_wav(message):
     tts = gTTS(text=message, lang='en')
@@ -271,3 +280,104 @@ def start_gtts_thread(message):
     return
 
 audify_database()
+
+
+
+############################
+##### Grasping Intents #####
+############################
+
+COLORS = ("orange", "red", "white", "yellow", "gold", "black", "pink", "blue")
+
+COLOR_TO_PART_NAME = {
+    "orange": "bar_clamp",
+    "red": "vase",
+    "white": "part3",
+    "yellow": "pawn",
+    "gold": "part1",
+    "black": "gearbox",
+    "pink": "turbine_housing",
+    "blue": "nozzle"
+}
+
+
+class GraspOneSlots(fields.AmazonSlots):
+    paramOne = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspTwoSlots(GraspOneSlots):
+    paramTwo = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspThreeSlots(GraspTwoSlots):
+    paramThree = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspFourSlots(GraspThreeSlots):
+    paramFour = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspFiveSlots(GraspFourSlots):
+    paramFive = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspSixSlots(GraspFiveSlots):
+    paramSix = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspSevenSlots(GraspSixSlots):
+    paramSeven = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+class GraspEightSlots(GraspSevenSlots):
+    paramEight = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
+
+
+@intent(slots=GraspOneSlots)
+def Grasp1(session, paramOne):
+    return log_grasps(1, [paramOne])
+
+@intent(slots=GraspTwoSlots)
+def Grasp2(session, paramOne, paramTwo):
+    return log_grasps(2, [paramOne, paramTwo])
+
+@intent(slots=Grasp3Slots)
+def Grasp3(session, paramOne, paramTwo, paramThree):
+    return log_grasps(3, [paramOne, paramTwo, paramThree])
+
+@intent(slots=Grasp4Slots)
+def Grasp4(session, paramOne, paramTwo, paramThree, paramFour):
+    return log_grasps(4, [paramOne, paramTwo, paramThree, paramFour])
+
+@intent(slots=Grasp5Slots)
+def Grasp5(session, paramOne, paramTwo, paramThree, paramFour, paramFive):
+    return log_grasps(5, [paramOne, paramTwo, paramThree, paramFour, paramFive])
+
+@intent(slots=Grasp6Slots)
+def Grasp6(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix):
+    return log_grasps(6, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix])
+
+@intent(slots=Grasp7Slots)
+def Grasp7(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven):
+    return log_grasps(7, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven])
+
+@intent(slots=Grasp8Slots)
+def Grasp8(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight):
+    return log_grasps(8, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight])
+
+
+@intent
+def GraspAll(session):
+    return log_grasps("all", ["all"])
+
+
+def log_grasps(number, params):
+    if params[0] == "all":
+        parts = params
+    else:
+        parts = [COLOR_TO_PART_NAME[c] for c in params]
+    line = ','.join(parts).lower()
+    
+    # Write to file
+    f = open("grasp_command.txt", 'w')
+    f.write(line)
+    f.close()
+
+    return ResponseBuilder.create_response(end_session=True,
+            title="Grasp "+str(number),
+            content="Grasping "+str(number)+" items"
+        )
+
