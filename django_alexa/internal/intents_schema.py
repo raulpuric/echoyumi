@@ -12,10 +12,24 @@ DEFAULT_INTENTS = [
     "StopIntent",
     "HelpIntent",
     "SessionEndedRequest",
+]
+
+MY_INTENTS = [
     "GetRobotThought",
     "RunInDevMode",
     "RunInResultsMode",
+    "GraspAll",
+    "GraspOne",
+    "GraspTwo",
+    "GraspThree",
+    "GraspFour",
+    "GraspFive",
+    "GraspSix",
+    "GraspSeven",
+    "GraspEight",
 ]
+
+DEFAULT_INTENTS += MY_INTENTS
 
 
 class IntentsSchema():
