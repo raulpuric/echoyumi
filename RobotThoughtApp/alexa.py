@@ -327,35 +327,35 @@ class GraspEightSlots(GraspSevenSlots):
 
 
 @intent(slots=GraspOneSlots)
-def Grasp1(session, paramOne):
+def GraspOne(session, paramOne):
     return log_grasps(1, [paramOne])
 
 @intent(slots=GraspTwoSlots)
-def Grasp2(session, paramOne, paramTwo):
+def GraspTwo(session, paramOne, paramTwo):
     return log_grasps(2, [paramOne, paramTwo])
 
-@intent(slots=Grasp3Slots)
-def Grasp3(session, paramOne, paramTwo, paramThree):
+@intent(slots=GraspThreeSlots)
+def GraspThree(session, paramOne, paramTwo, paramThree):
     return log_grasps(3, [paramOne, paramTwo, paramThree])
 
-@intent(slots=Grasp4Slots)
-def Grasp4(session, paramOne, paramTwo, paramThree, paramFour):
+@intent(slots=GraspFourSlots)
+def GraspFour(session, paramOne, paramTwo, paramThree, paramFour):
     return log_grasps(4, [paramOne, paramTwo, paramThree, paramFour])
 
-@intent(slots=Grasp5Slots)
-def Grasp5(session, paramOne, paramTwo, paramThree, paramFour, paramFive):
+@intent(slots=GraspFiveSlots)
+def GraspFive(session, paramOne, paramTwo, paramThree, paramFour, paramFive):
     return log_grasps(5, [paramOne, paramTwo, paramThree, paramFour, paramFive])
 
-@intent(slots=Grasp6Slots)
-def Grasp6(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix):
+@intent(slots=GraspSixSlots)
+def GraspSix(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix):
     return log_grasps(6, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix])
 
-@intent(slots=Grasp7Slots)
-def Grasp7(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven):
+@intent(slots=GraspSevenSlots)
+def GraspSeven(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven):
     return log_grasps(7, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven])
 
-@intent(slots=Grasp8Slots)
-def Grasp8(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight):
+@intent(slots=GraspEightSlots)
+def GraspEight(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight):
     return log_grasps(8, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight])
 
 
