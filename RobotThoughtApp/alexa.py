@@ -203,6 +203,8 @@ class AudioThread(threading.Thread):
             self.engine.iterate()
             # spawn thread to convert message to wav file
             start_gtts_thread(message)
+            while self.engine.isBusy():
+                time.sleep(0.5)
         return
 
     def run(self):
