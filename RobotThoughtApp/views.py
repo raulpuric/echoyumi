@@ -41,12 +41,13 @@ i = 0
 
 def helloView(request):
 	global i
-	logMessage(messages[i])
+	# logMessage(messages[i])
 	i += 1
 	i %= len(messages)
 	
-	result = ""
-	for l in Log.objects.all():
+	result = str(Log.objects.count()) + "<br>"
+	last_1000 = Log.objects.order_by('-id')[:1000]
+	for l in last_1000:
 		result += str(l) + "<br>"
 	
 	return HttpResponse(result)
