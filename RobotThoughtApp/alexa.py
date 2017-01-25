@@ -368,24 +368,50 @@ calibration_step = 0
 @intent
 def Calibrate(session):
     global calibration_step
-    calibration_mapping = [
-        "Step 1",
-        "Step 2",
-        "Step 3",
-        "Step 4"
-    ]
+    end_session = False
 
-    
-    title = "Calibrating, step " + str(calibration_step + 1)
-    end_session = (calibration_step == len(calibration_mapping) - 1)
-    response = ResponseBuilder.create_response(end_session=end_session,
-            message = calibration_mapping[calibration_step],
+    base_command = "cd ~/Workspace/jeff_working/alan && source activate alan && "
+
+    if calibration_step == 0:
+        # cd Workspace/jeff_working/alan
+        # source activate alan
+        message = "I can help you with that! First, align the checkerboard so "
+        message += "that the bottom right corner is on the markings. Say next or "
+        message += "continue to move to the next step."
+    elif calibration_step == 1:
+        # python tools/register_camera.py
+        command = base_command + "python tools/register_camera.py"
+        call(command.split(" "), shell=True)
+        message = "Now align the amazon box similarly in the bottom right corner. "
+        message += "Place the checkerboard inside the box in the same corner."
+    elif calibration_step == 2:
+        # python tools/register_object.py amazon_box
+        command = base_command + "python tools/register_object.py amazon_box"
+        call(command.split(" "), shell=True)
+        command = base_command + "cd ../dex-net/ && "
+        command += "python tools/calibrate_box_crop.py data/experiments/amazon_box_tesla_11_07_16/grasp_experiment.yaml"
+        call(command.split(" "), shell=True)
+        # cd ../dex-net/
+        # python tools/calibrate_box_crop.py data/experiments/amazon_box_tesla_11_07_16/grasp_experiment.yaml
+        message = "Can you see anything besides the inside of the box in the image on the screen? "
+        message += "If so, then you will need to modify the yamel file. Otherwise, continue to the next step."
+    elif calibration_step == 3:
+        # python scripts/amazon_grasps.py data/experiments/amazon_box_tesla_11_07_16/
+        command = base_command + "python scripts/amazon_grasps.py data/experiments/amazon_box_tesla_11_07_16/"
+        call(command.split(" "), shell=True)
+        message = "And now you're all done! Happy developing!"
+        end_session = True
+
+    calibration_step += 1    
+    title = "Calibrating, step " + str(calibration_step)
+    response = ResponseBuilder.create_response(
+            message=message,
+            end_session=end_session,
             title=title,
             content=title
         )
 
-    calibration_step += 1
-    calibration_step %= len(calibration_mapping)
+    calibration_step %= 4
     return response
 
 
@@ -396,7 +422,7 @@ def Calibrate(session):
 ###################################
 
 
-DATA_COMMANDS = ("start", "record", "stop", "pause")
+DATA_COMMANDS = ("start", "record", "stop", "pause", "finish")
 
 class DataCollectionSlots(fields.AmazonSlots):
     command = fields.AmazonCustom(label="LIST_OF_COLORS", choices=DATA_COMMANDS)
@@ -419,8 +445,6 @@ def DataCollection(session, command):
             title="Data Collection Commands",
             content=str(command)
         )
-
-
 
 
 
