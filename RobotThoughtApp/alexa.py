@@ -415,7 +415,7 @@ def DataCollection(session, command):
     f.write(command)
     f.close()
 
-    return ResponseBuilder.create_response(end_session=True,
+    return ResponseBuilder.create_response(end_session=False,
             title="Data Collection Commands",
             content=str(command)
         )
