@@ -95,31 +95,30 @@ def RunInResultsMode(session):
 
     # message = "%d percent success rate on singulation."
 
-    file = open("/Users/rishikapadia/Downloads/data.csv", "rb")
+    file_path = os.path.join(settings.STATIC_ROOT, 'data.wav')
+    file = open(file_path, "rb")
 
     header = file.readline()
     header = header.strip().split(',')
-    completed_column_index = header.index('completed')
-    dropped_column_index = header.index('dropped_object')
-    # column_index = header.index('lifted_object')
+    success_column_index = header.index('human_label')
 
     # Skip second line
     _ = file.readline()
 
-    failures = 0
+    successes = 0
     total = 0
     for line in file:
         values = line.split(',')
-        if values[completed_column_index] == 'False' or values[dropped_column_index] == 'True':
-            failures += 1
+        if values[success_column_index] == '1':
+            successes += 1
         total += 1
 
     file.close()
 
     if total == 0:
-        success_rate = 0.0
+        success_rate = 0
     else:
-        success_rate = 100.0 * (total - failures) / total
+        success_rate = int(100.0 * successes / total + 0.5) # 0.5 is to round the percentage
 
     message = "We were successfully able to singulate " + str(success_rate) + " percent of the time!"
 
