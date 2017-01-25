@@ -23,10 +23,8 @@ MY_INTENTS = [
     "GraspTwo",
     "GraspThree",
     "GraspFour",
-    "GraspFive",
-    "GraspSix",
-    "GraspSeven",
-    "GraspEight",
+    "Calibrate",
+    "DataCollection",
 ]
 
 DEFAULT_INTENTS += MY_INTENTS

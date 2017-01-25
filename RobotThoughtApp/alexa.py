@@ -315,18 +315,6 @@ class GraspThreeSlots(GraspTwoSlots):
 class GraspFourSlots(GraspThreeSlots):
     paramFour = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
 
-class GraspFiveSlots(GraspFourSlots):
-    paramFive = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
-
-class GraspSixSlots(GraspFiveSlots):
-    paramSix = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
-
-class GraspSevenSlots(GraspSixSlots):
-    paramSeven = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
-
-class GraspEightSlots(GraspSevenSlots):
-    paramEight = fields.AmazonCustom(label="LIST_OF_COLORS", choices=COLORS)
-
 
 @intent(slots=GraspOneSlots)
 def GraspOne(session, paramOne):
@@ -343,22 +331,6 @@ def GraspThree(session, paramOne, paramTwo, paramThree):
 @intent(slots=GraspFourSlots)
 def GraspFour(session, paramOne, paramTwo, paramThree, paramFour):
     return log_grasps(4, [paramOne, paramTwo, paramThree, paramFour])
-
-@intent(slots=GraspFiveSlots)
-def GraspFive(session, paramOne, paramTwo, paramThree, paramFour, paramFive):
-    return log_grasps(5, [paramOne, paramTwo, paramThree, paramFour, paramFive])
-
-@intent(slots=GraspSixSlots)
-def GraspSix(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix):
-    return log_grasps(6, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix])
-
-@intent(slots=GraspSevenSlots)
-def GraspSeven(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven):
-    return log_grasps(7, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven])
-
-@intent(slots=GraspEightSlots)
-def GraspEight(session, paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight):
-    return log_grasps(8, [paramOne, paramTwo, paramThree, paramFour, paramFive, paramSix, paramSeven, paramEight])
 
 
 @intent
@@ -382,4 +354,73 @@ def log_grasps(number, params):
             title="Grasp "+str(number),
             content="Grasping "+str(number)+" items"
         )
+
+
+
+
+
+###############################
+##### Calibration Intents #####
+###############################
+
+calibration_step = 0
+
+@intent
+def Calibrate(session):
+    global calibration_step
+    calibration_mapping = [
+        "Step 1",
+        "Step 2",
+        "Step 3",
+        "Step 4"
+    ]
+
+    
+    title = "Calibrating, step " + str(calibration_step + 1)
+    end_session = (calibration_step == len(calibration_mapping) - 1)
+    response = ResponseBuilder.create_response(end_session=end_session,
+            message = calibration_mapping[calibration_step],
+            title=title,
+            content=title
+        )
+
+    calibration_step += 1
+    calibration_step %= len(calibration_mapping)
+    return response
+
+
+
+
+###################################
+##### Data Collection Intents #####
+###################################
+
+
+DATA_COMMANDS = ("start", "record", "stop", "pause")
+
+class DataCollectionSlots(fields.AmazonSlots):
+    command = fields.AmazonCustom(label="LIST_OF_COLORS", choices=DATA_COMMANDS)
+
+@intent(slots=DataCollectionSlots)
+def DataCollection(session, command):
+
+    if command not in DATA_COMMANDS:
+        return ResponseBuilder.create_response(end_session=True,
+                title="Data Collection Commands FAILED!",
+                content=str(command)
+            )
+
+    # Write to file
+    f = open("/home/autolab/Workspace/rishi_working/echoyumi/data_command.txt", 'w')
+    f.write(command)
+    f.close()
+
+    return ResponseBuilder.create_response(end_session=True,
+            title="Data Collection Commands",
+            content=str(command)
+        )
+
+
+
+
 

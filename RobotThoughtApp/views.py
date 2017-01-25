@@ -45,7 +45,7 @@ def helloView(request):
 	i += 1
 	i %= len(messages)
 	
-	result = str(Log.objects.count()) + "<br>"
+	result = ""
 	last_1000 = Log.objects.order_by('-id')[:1000]
 	for l in last_1000:
 		result += str(l) + "<br>"
