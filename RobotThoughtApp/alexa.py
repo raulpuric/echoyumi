@@ -95,6 +95,34 @@ def RunInResultsMode(session):
 
     # message = "%d percent success rate on singulation."
 
+    file = open("/Users/rishikapadia/Downloads/data.csv", "rb")
+
+    header = file.readline()
+    header = header.strip().split(',')
+    completed_column_index = header.index('completed')
+    dropped_column_index = header.index('dropped_object')
+    # column_index = header.index('lifted_object')
+
+    # Skip second line
+    _ = file.readline()
+
+    failures = 0
+    total = 0
+    for line in file:
+        values = line.split(',')
+        if values[completed_column_index] == 'False' or values[dropped_column_index] == 'True':
+            failures += 1
+        total += 1
+
+    file.close()
+
+    if total == 0:
+        success_rate = 0.0
+    else:
+        success_rate = 100.0 * (total - failures) / total
+
+    message = "We were successfully able to singulate " + str(success_rate) + " percent of the time!"
+
     return ResponseBuilder.create_response(message=message,
                                             end_session=True,
                                             title=title,
