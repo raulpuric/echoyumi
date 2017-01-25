@@ -95,7 +95,7 @@ def RunInResultsMode(session):
 
     # message = "%d percent success rate on singulation."
 
-    file_path = os.path.join(settings.STATIC_ROOT, 'data.wav')
+    file_path = os.path.join(settings.STATIC_ROOT, 'data.csv')
     file = open(file_path, "rb")
 
     header = file.readline()
