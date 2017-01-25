@@ -397,11 +397,11 @@ def Calibrate(session):
     global calibration_step
     end_session = False
 
+    # cd Workspace/jeff_working/alan
+    # source activate alan
     base_command = "cd ~/Workspace/jeff_working/alan && source activate alan && "
 
     if calibration_step == 0:
-        # cd Workspace/jeff_working/alan
-        # source activate alan
         message = "I can help you with that! First, align the checkerboard so "
         message += "that the bottom right corner is on the markings. Say next or "
         message += "continue to move to the next step."
