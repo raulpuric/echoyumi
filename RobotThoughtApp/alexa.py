@@ -462,6 +462,12 @@ def DataCollection(session, command):
                 title="Data Collection Commands FAILED!",
                 content=str(command)
             )
+    
+    if command == "finish":
+        return ResponseBuilder.create_response(end_session=True,
+                title="Data Collection Commands finished",
+                content=str(command)
+            )
 
     # Write to file
     f = open("/home/autolab/Workspace/rishi_working/echoyumi/data_command.txt", 'w')
