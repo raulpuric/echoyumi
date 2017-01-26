@@ -398,18 +398,20 @@ def Calibrate(session):
     end_session = False
 
     # cd Workspace/jeff_working/alan
+        # changed to Workspace/jeff_working/perception
     # source activate alan
-    base_command = "cd ~/Workspace/jeff_working/alan && source activate alan && "
+    base_command = "cd ~/Workspace/jeff_working/perception && source activate alan && "
 
     if calibration_step == 0:
         message = "I can help you with that! First, align the checkerboard so "
-        message += "that the bottom right corner is on the markings. Say next or "
-        message += "continue to move to the next step."
+        message += "that it is pushed against the robot's base. "
+        message += "The tab on the checkerboard should be flush with the robot. "
+        message += "Let me know when you are ready for the next step."
     elif calibration_step == 1:
         # python tools/register_camera.py
         command = base_command + "python tools/register_camera.py"
         call(command.split(" "), shell=True)
-        message = "Now align the amazon box similarly in the bottom right corner. "
+        message = "Now align the bottom right corner of the amazon box with the angled markings. "
         message += "Place the checkerboard inside the box in the same corner."
     elif calibration_step == 2:
         # python tools/register_object.py amazon_box
@@ -420,8 +422,10 @@ def Calibrate(session):
         call(command.split(" "), shell=True)
         # cd ../dex-net/
         # python tools/calibrate_box_crop.py data/experiments/amazon_box_tesla_11_07_16/grasp_experiment.yaml
-        message = "Can you see anything besides the inside of the box in the image on the screen? "
-        message += "If so, then you will need to modify the yamel file. Otherwise, continue to the next step."
+        message = "Now look at the screen. "
+        message += "Can you see anything besides the inside of the box in the image? "
+        message += "If so, you will need to modify the yamel file to crop out the border. "
+        message += "Otherwise, continue to the next step."
     elif calibration_step == 3:
         # python scripts/amazon_grasps.py data/experiments/amazon_box_tesla_11_07_16/
         command = base_command + "python scripts/amazon_grasps.py data/experiments/amazon_box_tesla_11_07_16/"
