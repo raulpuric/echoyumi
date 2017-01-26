@@ -93,5 +93,5 @@ ENV/
 
 
 # This project
-staticfiles/messages
+staticfiles/messages/*
 
