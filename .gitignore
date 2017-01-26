@@ -90,3 +90,8 @@ ENV/
 
 # Mac OS
 *.DS_Store
+
+
+# This project
+staticfiles/messages
+
