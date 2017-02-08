@@ -482,9 +482,9 @@ def DataCollection(session, command):
 
 
     global data_is_active
-    data_is_active = !data_is_active
+    data_is_active = not data_is_active
 
-    return ResponseBuilder.create_response(end_session=!data_is_active,
+    return ResponseBuilder.create_response(end_session=(not data_is_active),
             title="Data Collection Commands",
             content=str(command)
         )
