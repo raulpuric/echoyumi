@@ -455,6 +455,8 @@ def Calibrate(session):
 
 DATA_COMMANDS = ("start", "record", "stop", "pause", "finish")
 
+data_is_active = False
+
 class DataCollectionSlots(fields.AmazonSlots):
     command = fields.AmazonCustom(label="LIST_OF_COLORS", choices=DATA_COMMANDS)
 
@@ -478,7 +480,11 @@ def DataCollection(session, command):
     f.write(command)
     f.close()
 
-    return ResponseBuilder.create_response(end_session=False,
+
+    global data_is_active
+    data_is_active = !data_is_active
+
+    return ResponseBuilder.create_response(end_session=!data_is_active,
             title="Data Collection Commands",
             content=str(command)
         )
