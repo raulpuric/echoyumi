@@ -493,8 +493,16 @@ def DataCollection(session, command):
 
 
 STACKING_COMMANDS = [
-    "",
-    ""
+    "right close",
+    "right open",
+    "right close",
+    "left close",
+    "right open",
+    "right close",
+    "left open",
+    "left close",
+    "left open",
+    "right open"
 ]
 stacking_step = 0
 experiment_id = -1
@@ -570,7 +578,7 @@ def log_to_file(status):
     file_path = "/home/autolab/Workspace/rishi_working/experiment2_logs.csv"
     if not os.path.exists(file_path):
         f = open(file_path,'w')
-        header = ["experiment_id", "use_echobot", "timestamp", "status"]
+        header = ["experiment_id", "uses_echobot", "timestamp", "status"]
         f.write(",".join(header))
         f.close()
 
