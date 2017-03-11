@@ -525,30 +525,30 @@ def RingStacking(session, direction, status):
     if direction not in DIRECTIONS:
         message = "Sorry?"
         log_to_file("Error in direction")
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood direction", content=message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood direction", content=message, message=message)
     if status not in STATUSES:
         log_to_file("Error in status")
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood status", content=message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood status", content=message, message=message)
 
     # Main logic:
     command = str(direction) + " " + str(status)
     if command == STACKING_COMMANDS[stacking_step] and (stacking_step == len(STACKING_COMMANDS)-1):
         log_to_file("Step "+str(stacking_step)+" completed")
         stacking_step += 1
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Step "+str(stacking_step), content=message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Step "+str(stacking_step), content=message, message=message)
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
         content = "step: " + str(stacking_step) + ", command: " + str(command)
         stacking_step = 0
-        message = "Error. Say restart."
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Human Error", content=content)
+        message = "Error. Restart trial."
+        return ResponseBuilder.create_response(end_session=end_session, title="Human Error", content=content, message=message)
 
 
     if stacking_step == len(STACKING_COMMANDS):
         log_to_file("Success")
         message = "Success!"
         end_session = True
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Success", content=message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Success", content=message, message=message)
 
     return
 
@@ -558,7 +558,7 @@ def RestartRingStacking(session):
     global stacking_step
     stacking_step = 0
     log_to_file("Restarting")
-    return ResponseBuilder.create_response(end_session=False, title="Restarting", message="Continue", content=message)
+    return ResponseBuilder.create_response(end_session=False, title="Restarting", content=message, message="Continue")
 
 
 
@@ -570,7 +570,7 @@ def StartNewTrial(session, exp_id):
     global experiment_id
     experiment_id = exp_id
     message = "Starting trial "+str(experiment_id)
-    return ResponseBuilder.create_response(end_session=False, title=message, message=message, content=message)
+    return ResponseBuilder.create_response(end_session=False, title=message, content=message, message=message)
 
 
 
