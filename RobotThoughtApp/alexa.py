@@ -525,17 +525,17 @@ def RingStacking(session, direction, status):
     if direction not in DIRECTIONS:
         message = "Sorry?"
         log_to_file("Error in direction")
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood direction")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood direction", content=message)
     if status not in STATUSES:
         log_to_file("Error in status")
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood status")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood status", content=message)
 
     # Main logic:
     command = str(direction) + " " + str(status)
     if command == STACKING_COMMANDS[stacking_step] and (stacking_step == len(STACKING_COMMANDS)-1):
         log_to_file("Step "+str(stacking_step)+" completed")
         stacking_step += 1
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Step "+str(stacking_step))
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Step "+str(stacking_step), content=message)
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
         content = "step: " + str(stacking_step) + ", command: " + str(command)
@@ -548,7 +548,7 @@ def RingStacking(session, direction, status):
         log_to_file("Success")
         message = "Success!"
         end_session = True
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Success")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Success", content=message)
 
     return
 
@@ -558,7 +558,7 @@ def RestartRingStacking(session):
     global stacking_step
     stacking_step = 0
     log_to_file("Restarting")
-    return ResponseBuilder.create_response(end_session=False, title="Restarting", message="Continue")
+    return ResponseBuilder.create_response(end_session=False, title="Restarting", message="Continue", content=message)
 
 
 
@@ -570,7 +570,7 @@ def StartNewTrial(session, exp_id):
     global experiment_id
     experiment_id = exp_id
     message = "Starting trial "+str(experiment_id)
-    return ResponseBuilder.create_response(end_session=False, title=message, message=message)
+    return ResponseBuilder.create_response(end_session=False, title=message, message=message, content=message)
 
 
 
