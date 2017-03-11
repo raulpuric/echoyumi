@@ -534,8 +534,9 @@ def RingStacking(session, direction, status):
     command = str(direction) + " " + str(status)
     if command == STACKING_COMMANDS[stacking_step] and (stacking_step == len(STACKING_COMMANDS)-1):
         log_to_file("Step "+str(stacking_step)+" completed")
+        title = "Step "+str(stacking_step)
         stacking_step += 1
-        return ResponseBuilder.create_response(end_session=end_session, title="Step "+str(stacking_step), content=message, message=message)
+        return ResponseBuilder.create_response(end_session=end_session, title=title, content=message, message=message)
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
         content = "step: " + str(stacking_step) + ", command: " + str(command)
@@ -581,12 +582,14 @@ def log_to_file(status):
         f = open(file_path,'w')
         header = ["experiment_id", "uses_echobot", "timestamp", "status"]
         f.write(",".join(header))
+        f.write('\n')
         f.close()
 
     f = open(file_path, 'a')
     row = [experiment_id, True, time.time(), status]
     row = [str(i) for i in row]
     f.write(",".join(row))
+    f.write('\n')
     f.close()
     return
 
