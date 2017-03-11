@@ -493,16 +493,16 @@ def DataCollection(session, command):
 
 
 STACKING_COMMANDS = [
-    "right close",
-    "right open",
-    "right close",
-    "left close",
-    "right open",
-    "right close",
-    "left open",
-    "left close",
-    "left open",
-    "right open"
+    "right closed",
+    "right opened",
+    "right closed",
+    "left closed",
+    "right opened",
+    "right closed",
+    "left opened",
+    "left closed",
+    "left opened",
+    "right opened"
 ]
 stacking_step = 0
 experiment_id = -1
@@ -538,9 +538,10 @@ def RingStacking(session, direction, status):
         return ResponseBuilder.create_response(end_session=end_session, message=message, title="Step "+str(stacking_step))
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
+        content = "step: " + str(stacking_step) + ", command: " + str(command)
         stacking_step = 0
         message = "Error. Say restart."
-        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Human Error")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Human Error", content=content)
 
 
     if stacking_step == len(STACKING_COMMANDS):
