@@ -25,6 +25,9 @@ MY_INTENTS = [
     "GraspFour",
     "Calibrate",
     "DataCollection",
+    "RingStacking",
+    "RestartRingStacking",
+    "StartNewTrial",
 ]
 
 DEFAULT_INTENTS += MY_INTENTS

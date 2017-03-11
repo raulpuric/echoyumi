@@ -265,10 +265,10 @@ def start_bluetooth_thread(play_music=True):
     return
 
 def stop_bluetooth_thread():
-    global audio_thread
-    if audio_thread is not None:
-        audio_thread.stop()
-        audio_thread = None
+    # global audio_thread
+    # if audio_thread is not None:
+    #     audio_thread.stop()
+    #     audio_thread = None
     return
 
 
@@ -400,7 +400,7 @@ def Calibrate(session):
     # cd Workspace/jeff_working/alan
         # changed to Workspace/jeff_working/perception
     # source activate alan
-    base_command = "cd ~/Workspace/jeff_working/perception && source activate alan && "
+    base_command = "cd ~/Workspace/jeff_working/perception && source activate alan_michael && "
 
     if calibration_step == 0:
         message = "I can help you with that! First, align the checkerboard so "
@@ -447,7 +447,6 @@ def Calibrate(session):
 
 
 
-
 ###################################
 ##### Data Collection Intents #####
 ###################################
@@ -483,5 +482,103 @@ def DataCollection(session, command):
             content=str(command)
         )
 
+
+
+
+
+
+########################################
+##### EchoBot Ring-Stacking Intent #####
+########################################
+
+
+STACKING_COMMANDS = [
+    "",
+    ""
+]
+stacking_step = 0
+experiment_id = -1
+
+
+
+DIRECTIONS = ("left", "right")
+STATUSES = ("opened", "closed")
+
+class RingStackingSlots(fields.AmazonSlots):
+    direction = fields.AmazonCustom(label="LIST_OF_DIRECTIONS", choices=DIRECTIONS)
+    status = fields.AmazonCustom(label="LIST_OF_STATUSES", choices=STATUSES)
+
+
+@intent(slots=RingStackingSlots)
+def RingStacking(session, direction, status):
+    global stacking_step
+    end_session = False
+
+    if direction not in DIRECTIONS:
+        message = "Sorry?"
+        log_to_file("Error in direction")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood direction")
+    if status not in STATUSES:
+        log_to_file("Error in status")
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Misunderstood status")
+
+    # Main logic:
+    command = str(direction) + " " + str(status)
+    if command == STACKING_COMMANDS[stacking_step] and (stacking_step == len(STACKING_COMMANDS)-1):
+        log_to_file("Step "+str(stacking_step)+" completed")
+        stacking_step += 1
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Step "+str(stacking_step))
+    if command != STACKING_COMMANDS[stacking_step]:
+        log_to_file("Error")
+        stacking_step = 0
+        message = "Error. Say restart."
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Human Error")
+
+
+    if stacking_step == len(STACKING_COMMANDS):
+        log_to_file("Success")
+        message = "Success!"
+        end_session = True
+        return ResponseBuilder.create_response(end_session=end_session, message=message, title="Success")
+
+    return
+
+
+@intent
+def RestartRingStacking(session):
+    global stacking_step
+    stacking_step = 0
+    log_to_file("Restarting")
+    return ResponseBuilder.create_response(end_session=False, title="Restarting", message="Continue")
+
+
+
+class StartNewTrialSlots(fields.AmazonSlots):
+    exp_id = fields.AmazonNumber()
+
+@intent(slots=StartNewTrialSlots)
+def StartNewTrial(session, exp_id):
+    global experiment_id
+    experiment_id = exp_id
+    message = "Starting trial "+str(experiment_id)
+    return ResponseBuilder.create_response(end_session=False, title=message, message=message)
+
+
+
+
+def log_to_file(status):
+    file_path = "/home/autolab/Workspace/rishi_working/experiment2_logs.csv"
+    if not os.path.exists(file_path):
+        f = open(file_path,'w')
+        header = ["experiment_id", "use_echobot", "timestamp", "status"]
+        f.write(",".join(header))
+        f.close()
+
+    f = open(file_path, 'a')
+    row = [experiment_id, True, time.time(), status]
+    row = [str(i) for i in row]
+    f.write(",".join(row))
+    f.close()
+    return
 
 
