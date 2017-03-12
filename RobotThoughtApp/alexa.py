@@ -546,13 +546,14 @@ def RingStacking(session, direction, status):
         return ResponseBuilder.create_response(end_session=end_session, title="Human Error", content=content, message=message)
 
 
-    if stacking_step == len(STACKING_COMMANDS):
+    if stacking_step == len(STACKING_COMMANDS) - 1:
         log_to_file("Success")
         message = "Success!"
         end_session = True
+        stacking_step = 0
         return ResponseBuilder.create_response(end_session=end_session, title="Success", content=message, message=message)
 
-    message = "Unknown error"
+    message = "This error should not be reachable!"
     return ResponseBuilder.create_response(end_session=end_session, title=message, content=message, message=message)
 
 
