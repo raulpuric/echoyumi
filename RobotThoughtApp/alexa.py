@@ -572,6 +572,7 @@ class StartNewTrialSlots(fields.AmazonSlots):
 @intent(slots=StartNewTrialSlots)
 def StartNewTrial(session, exp_id):
     global experiment_id
+    log_to_file("Starting trial")
     experiment_id = exp_id
     message = "Starting trial "+str(experiment_id)
     return ResponseBuilder.create_response(end_session=False, title=message, content=message, message=message)
