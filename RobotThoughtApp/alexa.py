@@ -532,7 +532,7 @@ def RingStacking(session, direction, status):
 
     # Main logic:
     command = str(direction) + " " + str(status)
-    if command == STACKING_COMMANDS[stacking_step] and (stacking_step == len(STACKING_COMMANDS)-1):
+    if command == STACKING_COMMANDS[stacking_step] and (stacking_step != len(STACKING_COMMANDS)-1):
         log_to_file("Step "+str(stacking_step)+" completed")
         title = "Step "+str(stacking_step)
         stacking_step += 1
@@ -551,7 +551,8 @@ def RingStacking(session, direction, status):
         end_session = True
         return ResponseBuilder.create_response(end_session=end_session, title="Success", content=message, message=message)
 
-    return
+    message = "Unknown error"
+    return ResponseBuilder.create_response(end_session=end_session, title=message, content=message, message=message)
 
 
 @intent
