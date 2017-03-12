@@ -527,6 +527,7 @@ def RingStacking(session, direction, status):
         log_to_file("Error in direction")
         return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood direction", content=message, message=message)
     if status not in STATUSES:
+        message = "Sorry?"
         log_to_file("Error in status")
         return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood status", content=message, message=message)
 
@@ -536,7 +537,7 @@ def RingStacking(session, direction, status):
         log_to_file("Step "+str(stacking_step)+" completed")
         title = "Step "+str(stacking_step)
         stacking_step += 1
-        return ResponseBuilder.create_response(end_session=end_session, title=title, content=message, message=message)
+        return ResponseBuilder.create_response(end_session=end_session, title=title)
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
         content = "step: " + str(stacking_step) + ", command: " + str(command)
