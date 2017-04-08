@@ -266,9 +266,9 @@ def start_bluetooth_thread(play_music=True):
 
 def stop_bluetooth_thread():
     global audio_thread
-    if audio_thread is not None:
-        audio_thread.stop()
-        audio_thread = None
+    # if audio_thread is not None:
+    #     audio_thread.stop()
+    #     audio_thread = None
     return
 
 
