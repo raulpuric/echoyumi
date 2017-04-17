@@ -43,6 +43,20 @@ def GetRobotThought(session):
                                             title=title,
                                             content=content
                                           )
+     # return ResponseBuilder.create_response(message="",
+     #                                         reprompt="",
+     #                                         end_session=True, # should be true for audio streams
+     #                                         title="Play Audio Stream",
+     #                                         content="Streaming the robot logs.",
+     #                                         directives=[
+     #                                             ResponseBuilder.create_stream_directive(
+     #                                                 playBehavior="REPLACE_ALL",
+     #                                                 token="explainable-audio",
+     #                                                 url="https://134e60a0.ngrok.io/audio.mp3"
+     #                                             )
+     #                                         ]
+     #                                     )
+
 
 
 @intent
@@ -562,7 +576,7 @@ def RestartRingStacking(session):
     global stacking_step
     stacking_step = 0
     log_to_file("Restarting")
-    return ResponseBuilder.create_response(end_session=False, title="Restarting", content=message, message="Continue")
+    return ResponseBuilder.create_response(end_session=False, title="Restarting", content="Continue", message="Continue")
 
 
 
