@@ -612,7 +612,7 @@ def RestartRingStacking(session):
     global stacking_step
     stacking_step = 0
     log_to_file("Restarting")
-    message = "Continue"
+    message = "Restarted. Please continue from the beginning."
     audio_logger.log(message)
     return ResponseBuilder.create_response(end_session=False, title="Restarting", content=message)
 
