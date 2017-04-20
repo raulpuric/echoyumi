@@ -33,7 +33,10 @@ The external url will be in the form of https://*.ngrok.io. If you want to have 
 Refreshing the homepage will add a log to the database.
 
 
-To add a different background music song (WAV file only), replace song.wav in the /static and /staticfiles folders.
+To add a different background music song (WAV file only), replace song.wav in the /static and /staticfiles folders. You may need to use the following UNIX command to convert it to the format: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 24000 Hz
+```
+ffmpeg -i old_file.wav -acodec pcm_s16le -ac 1 -ar 24000 new_file.wav
+```
 
 
 

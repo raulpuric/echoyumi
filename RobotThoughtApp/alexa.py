@@ -7,14 +7,40 @@ import os, sys, time
 import pyaudio, wave
 import threading
 import pyttsx
+import random
 
 from RobotThoughtApp.models import Log
+
+sys.path.append('..')
+import robot_logger as audio_logger
 
 
 
 ########################
 ##### Main Intents #####
 ########################
+
+@intent
+def LaunchRequest(session):
+    """
+    Default Start Session Intent
+    ---
+    launch
+    open
+    resume
+    start
+    run
+    load
+    begin
+    """
+    messages = [
+        "Hello, friend! Let's get started.",
+        "Howdy, partner! Ready when you are.",
+        "Nice to see you! Let's begin."
+    ]
+    return ResponseBuilder.create_response(message=random.choice(messages),
+                                           end_session=False)
+
 
 @intent
 def GetRobotThought(session):
@@ -43,20 +69,6 @@ def GetRobotThought(session):
                                             title=title,
                                             content=content
                                           )
-     # return ResponseBuilder.create_response(message="",
-     #                                         reprompt="",
-     #                                         end_session=True, # should be true for audio streams
-     #                                         title="Play Audio Stream",
-     #                                         content="Streaming the robot logs.",
-     #                                         directives=[
-     #                                             ResponseBuilder.create_stream_directive(
-     #                                                 playBehavior="REPLACE_ALL",
-     #                                                 token="explainable-audio",
-     #                                                 url="https://134e60a0.ngrok.io/audio.mp3"
-     #                                             )
-     #                                         ]
-     #                                     )
-
 
 
 @intent
@@ -231,7 +243,10 @@ class AudioThread(threading.Thread):
         return data
 
     def play_message(self, message):
-        file_path = os.path.join(settings.STATIC_ROOT, 'messages', message.lower().replace(" ", "_").replace('/', '_')+'.wav')
+        if message[:7] == "effect_":
+            file_path = os.path.join(settings.STATIC_ROOT, 'effects', message + '.wav')
+        else:
+            file_path = os.path.join(settings.STATIC_ROOT, 'messages', message.lower().replace(" ", "_").replace('/', '_')+'.wav')
         if os.path.isfile(file_path):
             wf = wave.open(file_path, 'rb')
             msg_data = wf.readframes(sys.maxint)
@@ -280,9 +295,9 @@ def start_bluetooth_thread(play_music=True):
 
 def stop_bluetooth_thread():
     global audio_thread
-    # if audio_thread is not None:
-    #     audio_thread.stop()
-    #     audio_thread = None
+    if audio_thread is not None:
+        audio_thread.stop()
+        audio_thread = None
     return
 
 
@@ -530,20 +545,21 @@ class RingStackingSlots(fields.AmazonSlots):
     direction = fields.AmazonCustom(label="LIST_OF_DIRECTIONS", choices=DIRECTIONS)
     status = fields.AmazonCustom(label="LIST_OF_STATUSES", choices=STATUSES)
 
-
 @intent(slots=RingStackingSlots)
 def RingStacking(session, direction, status):
     global stacking_step
     end_session = False
 
     if direction not in DIRECTIONS:
-        message = "Sorry?"
+        message = "Sorry? I did not understand the first word."
         log_to_file("Error in direction")
-        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood direction", content=message, message=message)
+        audio_logger.log(message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood direction", content=message)
     if status not in STATUSES:
-        message = "Sorry?"
+        message = "Sorry? I did not understand the second word."
         log_to_file("Error in status")
-        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood status", content=message, message=message)
+        audio_logger.log(message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Misunderstood status", content=message)
 
     # Main logic:
     command = str(direction) + " " + str(status)
@@ -551,24 +567,44 @@ def RingStacking(session, direction, status):
         log_to_file("Step "+str(stacking_step)+" completed")
         title = "Step "+str(stacking_step)
         stacking_step += 1
+        audio_logger.log("effect_step_1")
         return ResponseBuilder.create_response(end_session=end_session, title=title)
     if command != STACKING_COMMANDS[stacking_step]:
         log_to_file("Error")
         content = "step: " + str(stacking_step) + ", command: " + str(command)
         stacking_step = 0
-        message = "Error. Restart trial."
-        return ResponseBuilder.create_response(end_session=end_session, title="Human Error", content=content, message=message)
+        # message = "Error. Restart trial."
+
+        message = random.choice([
+            "Hmm, that's not quite right. Let's reset the sequence and try that again.",
+            "Hmm, that's not what I expected. Let's restart the demonstration."
+        ])
+        audio_logger.log("effect_error")
+        time.sleep(0.05)
+        audio_logger.log(message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Human Error", content=content)
 
 
     if stacking_step == len(STACKING_COMMANDS) - 1:
         log_to_file("Success")
-        message = "Success!"
+        # message = "Success!"
+        message = random.choice([
+            "You figured it out!",
+            "All done! You're really good at this!",
+            "Well done! You made it look easy!",
+            "Congratulations! You've finished the experiment.",
+            "Well aren't you a problem solver! Good work!"
+        ])
+        audio_logger.log("effect_success")
+        time.sleep(0.05)
+        audio_logger.log(message)
         end_session = True
         stacking_step = 0
-        return ResponseBuilder.create_response(end_session=end_session, title="Success", content=message, message=message)
+        return ResponseBuilder.create_response(end_session=end_session, title="Success", content=message)
 
     message = "This error should not be reachable!"
-    return ResponseBuilder.create_response(end_session=end_session, title=message, content=message, message=message)
+    audio_logger.log(message)
+    return ResponseBuilder.create_response(end_session=end_session, title=message, content=message)
 
 
 @intent
@@ -576,7 +612,9 @@ def RestartRingStacking(session):
     global stacking_step
     stacking_step = 0
     log_to_file("Restarting")
-    return ResponseBuilder.create_response(end_session=False, title="Restarting", content="Continue", message="Continue")
+    message = "Continue"
+    audio_logger.log(message)
+    return ResponseBuilder.create_response(end_session=False, title="Restarting", content=message)
 
 
 
@@ -589,7 +627,8 @@ def StartNewTrial(session, exp_id):
     experiment_id = exp_id
     log_to_file("Starting trial")
     message = "Starting trial "+str(experiment_id)
-    return ResponseBuilder.create_response(end_session=False, title=message, content=message, message=message)
+    audio_logger.log(message)
+    return ResponseBuilder.create_response(end_session=False, title=message, content=message)
 
 
 
