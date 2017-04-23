@@ -34,11 +34,12 @@ def LaunchRequest(session):
     begin
     """
     messages = [
-        "Hello, friend! Let's get started.",
-        "Howdy, partner! Ready when you are.",
+        "Hello friend! Let's get started.",
+        "Howdy partner! Ready when you are.",
         "Nice to see you! Let's begin."
     ]
-    return ResponseBuilder.create_response(message=random.choice(messages),
+    audio_logger.log(random.choice(messages))
+    return ResponseBuilder.create_response(message="",
                                            end_session=False)
 
 
@@ -576,8 +577,8 @@ def RingStacking(session, direction, status):
         # message = "Error. Restart trial."
 
         message = random.choice([
-            "Hmm, that's not quite right. Let's reset the sequence and try that again.",
-            "Hmm, that's not what I expected. Let's restart the demonstration."
+            "That's not quite right. Let's reset the sequence and try that again.",
+            "That's not what I expected. Let's restart the demonstration."
         ])
         audio_logger.log("effect_error")
         time.sleep(0.05)
