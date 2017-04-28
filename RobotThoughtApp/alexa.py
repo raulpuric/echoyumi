@@ -482,10 +482,10 @@ def Calibrate(session):
 ###################################
 
 
-DATA_COMMANDS = ("start", "record", "stop", "pause", "finish")
+DATA_COMMANDS = ("start", "record", "stop", "pause", "finish", "capture", "take")
 
 class DataCollectionSlots(fields.AmazonSlots):
-    command = fields.AmazonCustom(label="LIST_OF_COLORS", choices=DATA_COMMANDS)
+    command = fields.AmazonCustom(label="DATA_COMMANDS", choices=DATA_COMMANDS)
 
 @intent(slots=DataCollectionSlots)
 def DataCollection(session, command):
@@ -510,6 +510,68 @@ def DataCollection(session, command):
     return ResponseBuilder.create_response(end_session=True,
             title="Data Collection Commands",
             content=str(command)
+        )
+
+
+# Overwriting the above function to test without using the external robot program
+# to actually record the camera images and robot arm poses
+ITERATION_NUMBER = 0
+STEP_NUMBER = 0
+
+messages_per_iteration = [
+    [
+        "Step 1: Please place the object in the workspace and capture an image.",
+        "Step 2 is through, now run step 1."
+    ],
+    [
+        "Step 2: Please guide my arm to the object and record my arm's pose.",
+        "Step 1 is done, now do step 2."
+    ]
+]
+
+data_messages = [
+    "That's odd, I can't see the object anymore. Did you move it outside of the workspace?",
+    "Good for you! That was your fastest yet.",
+    "Oh no! The gripper is too low. Let's try that again.",
+    "Now we're on a roll! Only 5 more to go.",
+    "That was a bit slower than before. Can we try to go faster?",
+    "Only a few more and you can beat the lab time record!",
+    "Well done! You've collected 20 samples in record time. Hey where did you learn to do this?"
+]
+
+@intent(slots=DataCollectionSlots)
+def DataCollection(session, command):
+    global ITERATION_NUMBER, STEP_NUMBER
+
+    if command not in DATA_COMMANDS:
+        audio_logger.log("I did not recognize that command")
+        return ResponseBuilder.create_response(end_session=True,
+                title="Data Collection Commands FAILED!",
+                content=str(command)
+            )
+
+    if STEP_NUMBER == 0:
+        audio_logger.log("effect_step_1")
+    elif (STEP_NUMBER == 1) and ((ITERATION_NUMBER == 6) or (ITERATION_NUMBER == 8)):
+        audio_logger.log("effect_error")
+    elif STEP_NUMBER == 1:
+        audio_logger.log("effect_step_2")
+    time.sleep(0.05)
+
+    if ITERATION_NUMBER < 5:
+        audio_logger.log(messages_per_iteration[STEP_NUMBER][int(ITERATION_NUMBER / 2.0)])
+    elif (ITERATION_NUMBER > 5) and (STEP_NUMBER == 1) and (ITERATION_NUMBER - 6 < len(data_messages)):
+        # words of encouragement, speed prompts, iteration progress, etc.
+        audio_logger.log(data_messages[ITERATION_NUMBER - 6])
+
+    STEP_NUMBER = 1 - STEP_NUMBER
+    if STEP_NUMBER == 1:
+        ITERATION_NUMBER += 1
+
+    message = str(command) + " - Iteration #"+str(ITERATION_NUMBER+1)+", Step #"+str(STEP_NUMBER+1)
+    return ResponseBuilder.create_response(end_session=True,
+            title="Data Collection Demo",
+            content=message
         )
 
 
