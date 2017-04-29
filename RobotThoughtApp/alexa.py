@@ -564,9 +564,9 @@ def DataCollection(session, command):
         # words of encouragement, speed prompts, iteration progress, etc.
         audio_logger.log(data_messages[ITERATION_NUMBER - 6])
 
-    STEP_NUMBER = 1 - STEP_NUMBER
     if STEP_NUMBER == 1:
         ITERATION_NUMBER += 1
+    STEP_NUMBER = 1 - STEP_NUMBER
 
     message = str(command) + " - Iteration #"+str(ITERATION_NUMBER+1)+", Step #"+str(STEP_NUMBER+1)
     return ResponseBuilder.create_response(end_session=True,
