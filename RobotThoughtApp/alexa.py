@@ -558,7 +558,7 @@ def DataCollection(session, command):
         audio_logger.log("effect_step_2")
     time.sleep(0.05)
 
-    if ITERATION_NUMBER < 5:
+    if ITERATION_NUMBER < 4:
         audio_logger.log(messages_per_iteration[STEP_NUMBER][int(ITERATION_NUMBER / 2.0)])
     elif (ITERATION_NUMBER > 5) and (STEP_NUMBER == 1) and (ITERATION_NUMBER - 6 < len(data_messages)):
         # words of encouragement, speed prompts, iteration progress, etc.
